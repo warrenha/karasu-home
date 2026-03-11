@@ -3,31 +3,31 @@ A homepage for Karasu Ltd.
 
 This front end project is build using vite, typescript, react and tailwindccs.
 
+Changes to the github repo are auto uploaded to Cloudflare Pages.
+
 ### Running (Dev)
 To build and run the development server:
 ```
 pnpm run dev
 ```
 
-Then in a browser (use the url shown by vite):
+Then in a browser (the url shown by vite):
 ```
 http://localhost:5173/
 ```
 
 ### Building (Prod)
-
 ```
 pnpm run build --base=/karasu/
 ```
-This adds the base 'karasu' to the url.
+This adds the base 'karasu' to urls, so assets can be found using an absolute path.
 
 ```
 http://my-server.local/karasu
 ```
 
 ### Git & GitHub
-
-This project was initialized as follows:
+This project was initialized as follows.
 
 ```
 # Initialize the .git directory locally
