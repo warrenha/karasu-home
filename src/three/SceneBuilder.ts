@@ -2,7 +2,12 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { createShapes } from './ShapeBuilder'
 
+/*
+ * Creates the complete 3d scene, with camera, lighting and renderer.
+ */
 export const createScene = (div: HTMLDivElement) => {
+    console.debug('Creating 3d scene...')
+
     // Container dimensions
     const width = div.clientWidth
     const height = div.clientHeight
@@ -12,6 +17,7 @@ export const createScene = (div: HTMLDivElement) => {
     scene.background = new THREE.Color(0xffffff)
     // scene.fog = new THREE.Fog(0xf0f0f0, 10, 50)
     
+    // Camera
     const createCamera = () => {
         const camera = new THREE.PerspectiveCamera(
             25,
@@ -24,10 +30,10 @@ export const createScene = (div: HTMLDivElement) => {
         return camera;
     }
     const camera = createCamera()
-    
+
+    // Renderer
     const createRenderer = () => {
         const renderer = new THREE.WebGLRenderer({ antialias: true })
-        // renderer.setSize(window.innerWidth, window.innerHeight)
         renderer.setSize(width, height)
         renderer.setPixelRatio(window.devicePixelRatio)
         renderer.shadowMap.enabled = true
@@ -35,7 +41,8 @@ export const createScene = (div: HTMLDivElement) => {
         return renderer;
     }
     const renderer = createRenderer()
-    
+
+    // Lighting
     const addLighting = () => {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
         scene.add(ambientLight)
@@ -55,50 +62,41 @@ export const createScene = (div: HTMLDivElement) => {
     }
     addLighting();
 
-    /*const addGround = () => {
-        const planeMesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(100, 100),
-            new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false })
-        );
-        planeMesh.rotation.x = -Math.PI / 2;
-        planeMesh.receiveShadow = true;
-        scene.add(planeMesh);
+    const addGround = () => {
+        //const plane = new THREE.Mesh(
+        //    new THREE.PlaneGeometry(10, 10),
+        //    new THREE.MeshPhongMaterial({ color: 0xffffff, depthWrite: false })
+        //    //new THREE.MeshStandardMaterial({ color: 0xffffff })
+        //);
+        //plane.position.set(0, 0, -10)
+        //plane.rotation.x = -Math.PI / 2;
+        //plane.rotation.x = -Math.PI / 8;
+        //plane.receiveShadow = true;
+        //scene.add(plane);
 
-        const grid = new THREE.GridHelper(100, 40, 0x000000, 0x000000);
-        (grid.material as THREE.Material).opacity = 0.2;
-        (grid.material as THREE.Material).transparent = true;
+        const grid = new THREE.GridHelper(25, 25, 0xe0e0e0, 0xe0e0e0);
+        grid.rotation.x = Math.PI / 8;
+        //(grid.material as THREE.Material).opacity = 0.2;
+        //(grid.material as THREE.Material).transparent = true;
         scene.add(grid)
-    }*/
-    //addGround()
+    }
+    addGround()
     
     const addShapes = () => {
-        //const shape = createCube(false)
-        //const shape2 = createCube(true)
-        //const shape3 = createEdgesCube()
-        //scene.add(shape2)
-        //scene.add(shape2)
-        // scene.add(cube)
-    
-        // const material = new THREE.MeshBasicMaterial({ color: 0x404040 })
-        // const cube = new THREE.Mesh(geometry, material)
-        // scene.add(cube)
-
         const shapes = createShapes()
         for (const shape of shapes) {
             scene.add(shape)
         }
-
         return shapes
     }
     const shapes = addShapes();
 
+    // Controls
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.update();
     
     const addAnimation = () => {
         function animate(time: any) {
-            // cube.rotation.x = time / 2000
-            // cube.rotation.y = time / 1000
             for (const shape of shapes) {
                 shape.rotation.x = time / 15000
                 shape.rotation.y = time / 5000

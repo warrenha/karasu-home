@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react'
 import { createScene } from './SceneBuilder'
 
 /*
- * - - - - - - - - - -
+ * - - - - - - - - - - - - - - -
  *
- * - - - - - - - - - -
+ * - - - - - - - - - - - - - - -
  */
 const ThreeScene = () => {
     const [ref, setRef] = useState<HTMLDivElement | null>(null)
-    console.info(`ThreeScene ref=${ref === null}`)
+    console.debug(`ThreeScene ref=${ref === null}`)
 
+    // Create the 3d scene on mount
     useEffect(() => {
         const renderer = ref ? createScene(ref) : null
         return () => {

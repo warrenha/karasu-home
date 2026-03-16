@@ -6,10 +6,9 @@ export const createShapes = () => {
         const geometry = new THREE.BoxGeometry(2, 2, 2)
         const material = new THREE.MeshBasicMaterial({
             color: wireframe ? 0x404040 : 0xffffff,
-            wireframe
+            wireframe: false
         })
-        const cube = new THREE.Mesh(geometry, material)
-        return cube
+        return new THREE.Mesh(geometry, material)
     }
         
     const createEdgesCube = () => {
@@ -36,11 +35,6 @@ export const createShapes = () => {
 
         const material = new THREE.MeshBasicMaterial( { color: 0x404040, wireframe: true } );
 
-        //const material = new THREE.MeshPhongMaterial({
-            /*map: createCheckerTexture()*/
-        //    wireframe: true
-        //})
-
         const ball = new THREE.Mesh(geometry, material)
 
         //ball.position.set(0, 8, 0)
@@ -48,7 +42,6 @@ export const createShapes = () => {
         return [ball]
     }
 
-    //const shapes = createWireAndMeshCube()
     const shapes = createBall()
     return shapes
 }
