@@ -2,8 +2,6 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { createShapes } from './ShapeBuilder'
 
-const Radius = 5
-
 /*
  * Creates the complete 3d scene, with camera, lighting and renderer.
  */
