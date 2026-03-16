@@ -25,8 +25,9 @@ export const createScene = (div: HTMLDivElement) => {
             0.1,
             1000
         )
-        camera.position.set(0, 0, 5)
-        camera.lookAt(0, 0, 0)
+        camera.position.set(0, 4, 7)
+        // Has no effect, use controls.target instead.
+        //camera.lookAt(0, 10, 0)
         return camera;
     }
     const camera = createCamera()
@@ -36,7 +37,7 @@ export const createScene = (div: HTMLDivElement) => {
         const renderer = new THREE.WebGLRenderer({ antialias: true })
         renderer.setSize(width, height)
         renderer.setPixelRatio(window.devicePixelRatio)
-        renderer.shadowMap.enabled = true
+        //renderer.shadowMap.enabled = true
         div.appendChild(renderer.domElement)
         return renderer;
     }
@@ -74,7 +75,7 @@ export const createScene = (div: HTMLDivElement) => {
         //plane.receiveShadow = true;
         //scene.add(plane);
 
-        const grid = new THREE.GridHelper(25, 25, 0xe0e0e0, 0xe0e0e0);
+        const grid = new THREE.GridHelper(35, 35, 0xff0000, 0xe0e0e0);
         grid.rotation.x = Math.PI / 8;
         //(grid.material as THREE.Material).opacity = 0.2;
         //(grid.material as THREE.Material).transparent = true;
@@ -93,19 +94,20 @@ export const createScene = (div: HTMLDivElement) => {
 
     // Controls
     const controls = new OrbitControls(camera, renderer.domElement)
+    controls.target = new THREE.Vector3(0, 4, 0)
     controls.update();
-    
-    const addAnimation = () => {
-        function animate(time: any) {
-            for (const shape of shapes) {
-                shape.rotation.x = time / 15000
-                shape.rotation.y = time / 5000
-            }
-            controls.update()
-            renderer.render(scene, camera)
+
+    const animate = (time: any) => {
+        for (const shape of shapes) {
+            shape.rotation.x = time / 15000
+            shape.rotation.y = time / 5000
         }
+        controls.update()
+        renderer.render(scene, camera)
+    }
+
+    const addAnimation = () => {
         renderer.setAnimationLoop(animate)
-        return renderer
     }
     addAnimation();
 
