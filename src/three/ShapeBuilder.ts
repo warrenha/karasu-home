@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+const Radius = 5
+
 export const createShapes = () => {
 
     /*const createCube = (wireframe: boolean) => {
@@ -31,13 +33,13 @@ export const createShapes = () => {
     }*/
 
     const createBall = () => {
-        const geometry = new THREE.SphereGeometry(2.8, 32, 16)
+        const geometry = new THREE.SphereGeometry(Radius, 32, 16)
 
         const material = new THREE.MeshBasicMaterial( { color: 0x404040, wireframe: true } );
 
         const ball = new THREE.Mesh(geometry, material)
 
-        //ball.position.set(0, 8, 0)
+        ball.position.set(0, Radius+0.5, 0)  // a bit extra, as clips the ground
         //ball.castShadow = true
         return [ball]
     }
