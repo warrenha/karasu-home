@@ -1,3 +1,4 @@
+import ContactCard from './ContactCard'
 import ServiceList from './ServiceList'
 import ThreeScene from '../three/ThreeScene'
 
@@ -19,8 +20,10 @@ const FrontPage = () => {
                 <h2>Software consultancy, application design & engineering</h2>
             </div>
             <ThreeScene />
-            <ServiceList />
-            <div className="my-2 text-xl text-red-600">This is a placeholder!</div>
+            <div className="flex flex-col items-stretch gap-10">
+                <ServiceList />
+                <ContactCard />
+            </div>
             <div className="flex flex-col gap-2 text-base">
                 <div>
                     Page created using React, Typescript, Tailwind CSS, Vite, pnpm, and Three.js
