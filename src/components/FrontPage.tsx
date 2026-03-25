@@ -14,13 +14,13 @@ const FrontPage = () => {
     return (
         <div
             data-id="FrontPage"
-            className="flex flex-col content-center items-center h-full w-full text-center bg-white text-gray-800 gap-6 py-2">
+            className="flex flex-col content-center items-center h-full w-full text-center bg-white text-gray-800 gap-[25px] py-2">
             <div className="flex flex-col gap-2" >
                 <h1>Karasu Software</h1>
                 <h2>Software consultancy, application design & engineering</h2>
             </div>
             <ThreeScene />
-            <div className="flex flex-col items-stretch gap-10">
+            <div className="flex flex-col items-stretch gap-[25px]">
                 <ServiceList />
                 <ContactCard />
             </div>

@@ -5,6 +5,8 @@ type Props = {
     children?: ReactNode
 }
 
+// border border-neutral-400 shadow-[3px_3px_0_0_rgb(249,249,249)]
+// box-shadow: 3px 3px 0 0 #f7f7f7;
 /*
  * - - - - - - - - - -
  *
@@ -16,13 +18,13 @@ const Card = (props: Props) => {
     const { title, children } = props;
     return (
         <div>
-            <div className="border border-neutral-300 rounded-2xl px-8 pb-4 pt-2 shadow-[3px_3px_0_0_rgb(249,249,249)]">
+            <div className="bg-neutral-100 text-neutral-700 border border-[#c5c5c5] rounded-2xl shadow-[3px_3px_0_0_rgb(247,247,247)]">
                 { title && (
-                    <div className="border-b border-neutral-300 pb-2 text-lg font-semibold" >
+                    <div className="pb-2 text-[15px] font-[400] py-4 px-5" >
                         { title }
                     </div>
                 )}
-                <div className="text-lg pt-4">
+                <div className="text-[14px] leading-[1.4] pt-2 pb-4 px-5">
                     { children }
                 </div>
             </div>
