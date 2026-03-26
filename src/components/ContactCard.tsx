@@ -37,15 +37,6 @@ const defaultValues /*: FormSchema*/ = {
  * - - - - - - - - - -
  */
 const ContactCard = () => {
-    /* console.info('Contact Card')
-    try {
-        const input = { name: 'Warren', email: 'hello@karasu.co.uk', message: 'Blah blah' }
-        const data = formSchema.parse(input)
-        console.info(`ZOD:\n${JSON.stringify(data)}`)
-    } catch (e: any) {
-        console.warn('ERROR IN ContactCard')
-        console.warn(e)
-    }*/
 
     const form = useForm<z.infer<FormSchema>>({
         resolver: zodResolver(formSchema),
@@ -53,7 +44,7 @@ const ContactCard = () => {
     })
 
     const onSubmit = (data: z.infer<FormSchema>) => {
-        console.info('SUBMIT')
+        console.info(`SUBMIT\n${JSON.stringify(data, null, 2)}`)
     }
 
     const renderName = ({ field, fieldState }: any) => (
