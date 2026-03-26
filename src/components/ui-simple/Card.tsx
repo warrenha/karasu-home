@@ -24,7 +24,7 @@ const Card = (props: Props) => {
                         { title }
                     </div>
                 )}
-                <div className="text-[14px] leading-[1.4] pt-2 pb-4 px-5">
+                <div className="text-[14px] leading-[1.6] pt-2 pb-4 px-5">
                     { children }
                 </div>
             </div>

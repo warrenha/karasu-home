@@ -12,7 +12,11 @@ const Title = 'Contact us'
 const ContactCard = () => {
     return (
         <Card data-id="ContactCard" title={Title} >
-            Contact Card
+            <div className="flex flex-col items-start" >
+                <div>Your Email</div>
+                <div>Subject</div>
+                <div>Message</div>
+            </div>
         </Card>
     )
 }

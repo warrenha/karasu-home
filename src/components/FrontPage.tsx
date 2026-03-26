@@ -26,7 +26,8 @@ const FrontPage = () => {
             </div>
             <div className="flex flex-col gap-2 text-base">
                 <div>
-                    Page created using React, Typescript, Tailwind CSS, Vite, pnpm, and Three.js
+                    Page created using React, Typescript, Tailwind CSS, Vite, pnpm, and Three.js.
+                    Hosted on Cloudflare Pages.
                 </div>
             </div>
         </div>

@@ -1,15 +1,8 @@
+import { IoBuildOutline } from 'react-icons/io5'
 import Card from './ui-simple/Card'
-//import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { getIcon, getText, serviceTitle, serviceTexts } from './ServiceTexts'
 
-const Title = 'Services (Full stack)'
-const Services = [
-    'User interface design and development',
-    'Custom components - fast, responsive & modern styling',
-    'Data visualization using charts and maps showing data layers (GIS)',
-    '',
-    'Technology stack: React, TypeScript, Node.js, Express server',
-    'Databases: PostgreSQL, Oracle, SQL Server'
-]
+import type { TextLine } from './ServiceTexts'
 
 /*
  * - - - - - - - - - -
@@ -19,27 +12,25 @@ const Services = [
  * - - - - - - - - - -
  */
 const ServicesList = () => {
+    const renderTextLine = (t: TextLine) => {
+        const icon = getIcon(t)
+        const text = getText(t) || ''
+        return (
+            <div className="text-left">
+                {!text.length ? '\u00A0' : ( // &nbsp;
+                    <div className="flex items-center gap-2">
+                        {icon}
+                        {text}
+                    </div>
+                )}
+            </div>
+        )
+    }
     return (
-        <Card data-id="ServicesList" title={Title} >
-            { Services.map(text => (
-                <div className="text-left">{text.length ? text : '\u00A0' /* &nbsp; */}</div>
-            ))}
+        <Card data-id="ServicesList" title={serviceTitle} >
+            { serviceTexts.map(t => renderTextLine(t)) }
         </Card>
     )
-    /*
-    return (
-        <Card data-id="ServicesList" className="border bg-neutral-100 border-neutral-400 shadow-[3px_3px_0_0_rgb(249,249,249)]">
-            <CardHeader>
-                <CardTitle>{Title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-                { Services.map(text => (
-                    <div className="text-left">{text.length ? text : '\u00A0' * &nbsp; *}</div>
-                ))}
-            </CardContent>
-        </Card>
-    )
-    */
 }
 
 export default ServicesList
