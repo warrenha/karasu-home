@@ -64,7 +64,7 @@ const ContactCard = () => {
             <Input
                 {...field}
                 id="form-contact-name"
-                className="text-base md:text-base ring-red-400"
+                className="text-base md:text-base ring-red-400 bg-[rgb(247,247,247)]"
                 aria-invalid={fieldState.invalid}
                 placeholder="Please enter your name"
                 autoComplete="off" />
@@ -80,7 +80,7 @@ const ContactCard = () => {
             <Input
                 {...field}
                 id="form-contact-email"
-                className="text-base md:text-base"
+                className="text-base md:text-base bg-[rgb(247,247,247)]"
                 aria-invalid={fieldState.invalid}
                 placeholder="Please enter your email address"
                 autoComplete="off" />
@@ -97,11 +97,11 @@ const ContactCard = () => {
                 <InputGroupTextarea
                     {...field}
                     id="form-contact-message"
-                    className="min-h-24 resize-none text-base md:text-base"
+                    className="min-h-24 resize-none text-base md:text-base rounded-[5px] bg-[rgb(247,247,247)]"
                     placeholder="The message you want to send"
                     rows={6}
                     aria-invalid={fieldState.invalid} />
-                <InputGroupAddon align="block-end">
+                <InputGroupAddon align="block-end"className="rounded-[5px] bg-[rgb(247,247,247)]">
                     <InputGroupText className="tabular-nums">
                         {field.value.length}/1000 characters
                     </InputGroupText>
@@ -114,7 +114,7 @@ const ContactCard = () => {
     const renderButtons = () => (
         <Field orientation="horizontal" className="gap-3" >
             <Button type="button" variant="outline" onClick={() => form.reset()}
-                className="text-base cursor-pointer px-3" >
+                className="text-base cursor-pointer px-3 bg-[rgb(247,247,247)]" >
                 Reset
             </Button>
             <Button type="submit" form="form-contact"
