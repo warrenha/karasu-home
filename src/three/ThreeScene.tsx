@@ -24,8 +24,8 @@ const ThreeScene = () => {
     return (
         <div
             data-id="ThreeScene"
-            className="h-64 w-full bg-white border-y-1 border-neutral-400">
-            <div data-id="Scene" ref={setRef} className="w-full h-full" />
+            className="w-full bg-white border-y-1 border-neutral-400">
+            <div data-id="Scene" ref={setRef} className="w-full h-64" />
         </div>
     )
 }

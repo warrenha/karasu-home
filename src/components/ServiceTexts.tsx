@@ -32,7 +32,7 @@ export const getIcon = (t: TextLine): ReactNode | null => (
 
 // - - - - - Services - - - - - //
 
-export const serviceTitle = 'Services (Full stack)'
+export const serviceTitle = 'Services'
 
 export const serviceTexts: TextLine[] = [
     { icon: UserIcon, text: 'User interface design and development' },
@@ -40,5 +40,5 @@ export const serviceTexts: TextLine[] = [
     { icon: DataIcon, text: 'Data visualization using charts and maps showing data layers (GIS)' },
     '',
     { icon: ToolIcon, text: 'Technology stack: React, TypeScript, Node.js, Express server' },
-    { icon: DbIcon, text: 'Databases: PostgreSQL, Oracle, SQL Server' }
+    { icon: DbIcon, text: 'Database: PostgreSQL, Oracle, SQL Server' }
 ]
