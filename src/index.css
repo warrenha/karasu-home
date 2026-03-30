@@ -259,4 +259,12 @@ h2 {
   html {
     @apply font-sans;
     }
+
+    /* Custom added by developer */
+
+    textarea {
+        &:is([disabled]) {
+            pointer-events: none;  /* to be consistent with other inputs */
+        }
+    }
 }
