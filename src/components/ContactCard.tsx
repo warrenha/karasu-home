@@ -8,6 +8,10 @@ import { Input } from '@/components/ui/input'
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from '@/components/ui/input-group'
 import Card from './ui-simple/Card'
 
+import { usePostContactUs } from '@/api/api-contact'
+
+import type { ContactMessage } from '@/models/ContactMessage'
+
 const Title = 'Contact us'
 
 const formSchema = z.object({
@@ -38,6 +42,9 @@ const defaultValues /*: FormSchema*/ = {
  */
 const ContactCard = () => {
 
+    const { contactUs, pending, success, error } = usePostContactUs()
+    console.info(`ContactCard pending=${pending}, success=${success}, error=${error}`)
+
     const form = useForm<z.infer<FormSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues
@@ -45,7 +52,11 @@ const ContactCard = () => {
 
     const onSubmit = (data: z.infer<FormSchema>) => {
         console.info(`SUBMIT\n${JSON.stringify(data, null, 2)}`)
+        const message = data as ContactMessage;
+        contactUs(message)
     }
+
+    // - - - - - Render - - - - - //
 
     const renderName = ({ field, fieldState }: any) => (
         <Field data-invalid={fieldState.invalid} className="gap-[5px]" >

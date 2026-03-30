@@ -1,4 +1,7 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import FrontPage from './FrontPage'
+
+const queryClient = new QueryClient()
 
 /*
  * - - - - - - - - - -
@@ -7,9 +10,11 @@ import FrontPage from './FrontPage'
  */
 const App = () => {
     return (
-        <div data-id="App" className="w-full h-full bg-white">
-            <FrontPage />
-        </div>
+        <QueryClientProvider client={queryClient}>
+            <div data-id="App" className="w-full h-full bg-white">
+                <FrontPage />
+            </div>
+        </QueryClientProvider>
     )
 }
 
