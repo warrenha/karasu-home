@@ -1,14 +1,15 @@
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
-import type { ReactNode } from 'react'
 import type { ChildrenProps, ClassNameProps } from '@/utils/Props.ts'
+import type { ReactNode } from 'react'
 
-type Props = {
-    label?: string | ReactNode | null
-    icon?: ReactNode | null
-}
-& ChildrenProps
-& ClassNameProps
+type Props =
+    & {
+        label?: string | ReactNode | null
+        icon?: ReactNode | null
+    }
+    & ChildrenProps
+    & ClassNameProps
 
 /*
  * - - - - - - - - - -
@@ -18,14 +19,12 @@ type Props = {
  * - - - - - - - - - -
  */
 const LabelIcon = (props: Props) => {
-    const { label, icon, className, children } = props;
+    const { label, icon, className, children } = props
     return (
-        <div data-id="LabelIcon" className="flex items-center gap-2" >
-            { label && (
-                <span>{label}</span>
-            )}
-            { icon }
-            { children }
+        <div data-id="LabelIcon" className={cn('flex items-center gap-2', className)}>
+            {label && <span>{label}</span>}
+            {icon}
+            {children}
         </div>
     )
 }

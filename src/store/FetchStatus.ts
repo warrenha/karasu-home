@@ -3,9 +3,6 @@
 /*
  * Status for an API request (fetch).
  */
-enum FetchStatus {
-    Unset = 'unset',
-    Loading = 'loading',
-    Error = 'error',
-    Success = 'success'
-}
+export type FetchStatus = 'unset' | 'unset' | 'error' | 'success'
+
+// Avoids 'erasableSyntaxOnly' error of using enum
