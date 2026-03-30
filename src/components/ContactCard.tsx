@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from '@/components/ui/input-group'
-import Card from './ui-simple/Card'
+import { Card, LabelIcon, SmileIcon } from './ui-simple'
 
 import { usePostContactUs } from '@/api/api-contact'
 
@@ -41,9 +41,8 @@ const defaultValues /*: FormSchema*/ = {
  * - - - - - - - - - -
  */
 const ContactCard = () => {
-
     const { contactUs, pending, success, error } = usePostContactUs()
-    console.info(`ContactCard pending=${pending}, success=${success}, error=${error}`)
+    console.info(`[ContactCard] pending=${pending}, success=${success}, error=${error}`)
 
     const form = useForm<z.infer<FormSchema>>({
         resolver: zodResolver(formSchema),
@@ -52,14 +51,22 @@ const ContactCard = () => {
 
     const onSubmit = (data: z.infer<FormSchema>) => {
         console.info(`SUBMIT\n${JSON.stringify(data, null, 2)}`)
-        const message = data as ContactMessage;
+        const message = data as ContactMessage
         contactUs(message)
     }
 
+    const disabled = success || error
+
     // - - - - - Render - - - - - //
 
+    const statusText = error ? 'Error!' : pending ? 'Submitting...' : success ? (
+        <LabelIcon 
+            label="Sent! Thank you for your message"
+            icon={SmileIcon} />
+    ) : ''
+
     const renderName = ({ field, fieldState }: any) => (
-        <Field data-invalid={fieldState.invalid} className="gap-[5px]" >
+        <Field data-invalid={fieldState.invalid} className="gap-[5px]">
             <FieldLabel htmlFor="form-contact-name" className="text-base">
                 Your Name
             </FieldLabel>
@@ -69,7 +76,8 @@ const ContactCard = () => {
                 className="text-base md:text-base ring-red-400 bg-[rgb(247,247,247)]"
                 aria-invalid={fieldState.invalid}
                 placeholder="Please enter your name"
-                autoComplete="off" />
+                autoComplete="off"
+                disabled={disabled} />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
         </Field>
     )
@@ -85,13 +93,14 @@ const ContactCard = () => {
                 className="text-base md:text-base bg-[rgb(247,247,247)]"
                 aria-invalid={fieldState.invalid}
                 placeholder="Please enter your email address"
-                autoComplete="off" />
+                autoComplete="off"
+                disabled={disabled} />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
         </Field>
     )
 
     const renderMessage = ({ field, fieldState }: any) => (
-        <Field data-invalid={fieldState.invalid} className="gap-[5px]" >
+        <Field data-invalid={fieldState.invalid} className="gap-[5px]">
             <FieldLabel htmlFor="form-contact-messsage" className="text-base">
                 Message
             </FieldLabel>
@@ -99,11 +108,12 @@ const ContactCard = () => {
                 <InputGroupTextarea
                     {...field}
                     id="form-contact-message"
-                    className="min-h-24 resize-none text-base md:text-base rounded-[5px] bg-[rgb(247,247,247)]"
+                    className="min-h-24 resize-none text-base md:text-base rounded-[5px] bg-[rgb(247,247,247)] disabled:cursor-not-allowed"
                     placeholder="The message you want to send"
                     rows={6}
-                    aria-invalid={fieldState.invalid} />
-                <InputGroupAddon align="block-end"className="rounded-[5px] bg-[rgb(247,247,247)]">
+                    aria-invalid={fieldState.invalid} 
+                    disabled={disabled} />
+                <InputGroupAddon align="block-end" className="rounded-[5px] bg-[rgb(247,247,247)]">
                     <InputGroupText className="tabular-nums">
                         {field.value.length}/1000 characters
                     </InputGroupText>
@@ -114,15 +124,23 @@ const ContactCard = () => {
     )
 
     const renderButtons = () => (
-        <Field orientation="horizontal" className="gap-3" >
-            <Button type="button" variant="outline" onClick={() => form.reset()}
-                className="text-base cursor-pointer px-3 bg-[rgb(247,247,247)]" >
+        <Field orientation="horizontal" className="gap-3">
+            <Button
+                type="button"
+                variant="outline"
+                onClick={() => form.reset()}
+                disabled={disabled}
+                className="text-base cursor-pointer px-3 bg-[rgb(247,247,247)]">
                 Reset
             </Button>
-            <Button type="submit" form="form-contact"
-                className="text-base cursor-pointer px-3 border-0" >
+            <Button
+                type="submit"
+                form="form-contact"
+                disabled={disabled}
+                className="text-base cursor-pointer px-3 border-0">
                 Send
             </Button>
+            <div>{statusText}</div>
         </Field>
     )
 

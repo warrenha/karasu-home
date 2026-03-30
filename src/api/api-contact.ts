@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { apiPost } from './api'
 
@@ -16,26 +17,27 @@ export const postContactUs = async (
 }
 
 /*
- * Hook
+ * Hook -- hide the tanstack boilerplate
  */
 export const usePostContactUs = () => {
     const queryClient = useQueryClient()
 
-    const mutation = useMutation({
+    // The returned object is always a new instance, but mutate never changes
+    const { mutate, isPending, isSuccess, isError } = useMutation({
         mutationFn: postContactUs,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['contactUs'] })
         }
     })
 
-    const contactUs = async (message: ContactMessage) => {
-        mutation.mutate(message)
-    }
+    const contactUs = useCallback(async (message: ContactMessage) => {
+        mutate(message)  // --> postContactUs
+    }, [mutate])
 
     return {
-        pending: mutation.isPending,
-        error: mutation.isError,
-        success: mutation.isSuccess,
+        pending: isPending,
+        error: isError,
+        success: isSuccess,
         contactUs
     }
 }

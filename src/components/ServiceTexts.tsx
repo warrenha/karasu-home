@@ -1,17 +1,7 @@
 import { isObject, isString } from '@/utils/Utils'
-import { IoBuildOutline/*, IoCubeOutline*/, IoServerOutline, IoAccessibilityOutline, IoAnalyticsOutline, IoExtensionPuzzleOutline } from 'react-icons/io5'
+import { DataIcon, DbIcon, ToolIcon, UserIcon, PuzzleIcon } from '@/components/ui-simple'
 
 import type { ReactNode } from 'react'
-
-
-const size = "w-[1.1rem] h-[1.1rem]"
-
-//const ComponentIcon = <IoCubeOutline className={size} />
-const DataIcon = <IoAnalyticsOutline className={size} />
-const DbIcon = <IoServerOutline className={size} />
-const ToolIcon = <IoBuildOutline className={size} />
-const UserIcon = <IoAccessibilityOutline className={size} />
-const PuzzleIcon = <IoExtensionPuzzleOutline className={size} />
 
 // - - - - - Lines of Text - - - - - //
 
