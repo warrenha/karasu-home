@@ -12,7 +12,8 @@ import type { ContactMessage } from '@/models/ContactMessage'
 export const postContactUs = async (
     message: ContactMessage
 ) => {
-    const url = 'https://karasu-cf-worker-test.karasu-account.workers.dev/?test=contactUs'
+    //const url = 'https://karasu-cf-worker-test.karasu-account.workers.dev/?test=contactUs'
+    const url = 'https://karasu-cf-worker-email.karasu-account.workers.dev/?test=sendEmail'
     return apiPost(url, message)
 }
 
