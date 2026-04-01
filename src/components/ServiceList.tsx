@@ -1,4 +1,3 @@
-import { IoBuildOutline } from 'react-icons/io5'
 import Card from './ui-simple/Card'
 import { getIcon, getText, serviceTitle, serviceTexts } from './ServiceTexts'
 
@@ -11,12 +10,12 @@ import type { TextLine } from './ServiceTexts'
  *
  * - - - - - - - - - -
  */
-const ServicesList = () => {
+const ServiceList = () => {
     const renderTextLine = (t: TextLine) => {
         const icon = getIcon(t)
         const text = getText(t) || ''
         return (
-            <div className="text-left">
+            <div key={text} className="text-left">
                 {!text.length ? '\u00A0' : ( // &nbsp;
                     <div className="flex items-center gap-2">
                         {icon}
@@ -27,10 +26,10 @@ const ServicesList = () => {
         )
     }
     return (
-        <Card data-id="ServicesList" title={serviceTitle} >
+        <Card data-id="ServiceList" title={serviceTitle} >
             { serviceTexts.map(t => renderTextLine(t)) }
         </Card>
     )
 }
 
-export default ServicesList
+export default ServiceList

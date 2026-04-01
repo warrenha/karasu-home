@@ -1,9 +1,12 @@
-import type { ReactNode } from 'react'
+import { cn } from "@/lib/utils"
+
+import type { ChildrenProps, ClassNameProps } from '@/utils/Props.ts'
 
 type Props = {
     title?: string | null
-    children?: ReactNode
 }
+& ChildrenProps
+& ClassNameProps
 
 // border border-neutral-400 shadow-[3px_3px_0_0_rgb(249,249,249)]
 // box-shadow: 3px 3px 0 0 #f7f7f7;
@@ -15,12 +18,14 @@ type Props = {
  * - - - - - - - - - -
  */
 const Card = (props: Props) => {
-    const { title, children } = props;
+    const { className, title, children } = props;
     return (
-        <div>
-            <div className="bg-neutral-100 text-neutral-700 border border-[#c5c5c5] rounded-2xl shadow-[3px_3px_0_0_rgb(247,247,247)]">
+        <div data-id={cn(props["data-id"], "Card")} >
+            <div className={cn(
+                    "bg-neutral-100 text-neutral-700 border border-[#c5c5c5] rounded-2xl shadow-[3px_3px_0_0_rgb(247,247,247)]",
+                    className)} >
                 { title && (
-                    <div className="pb-2 text-[15px] font-[400] py-4 px-5" >
+                    <div className="pb-2 text-[15px] font-[500] py-4 px-5" >
                         { title }
                     </div>
                 )}

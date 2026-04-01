@@ -44,7 +44,7 @@
     --destructive: oklch(0.5594 0.1900 25.8625);
     --border: oklch(0.8576 0 0);
     --input: oklch(0.9067 0 0);
-    --ring: oklch(0.4891 0 0);
+    --ring: oklch(0.88 0.04 237.69); /* --ring: oklch(0.4891 0 0); */
     --chart-1: oklch(0.4891 0 0);
     --chart-2: oklch(0.4863 0.0361 196.0278);
     --chart-3: oklch(0.6534 0 0);
@@ -258,5 +258,13 @@ h2 {
     }
   html {
     @apply font-sans;
+    }
+
+    /* Custom added by developer */
+
+    textarea {
+        &:is([disabled]) {
+            pointer-events: none;  /* to be consistent with other inputs */
+        }
     }
 }
