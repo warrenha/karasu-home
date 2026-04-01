@@ -144,8 +144,10 @@ const ContactCard = () => {
         </Field>
     )
 
+    const disabledC = disabled ? 'bg-[#86cbd5]' : ''
+
     return (
-        <Card data-id="ContactCard" title={Title}>
+        <Card data-id="ContactCard" title={Title} className={disabledC}>
             <div className="flex flex-col gap-5">
                 <form id="form-contact" onSubmit={form.handleSubmit(onSubmit)}>
                     <FieldGroup>

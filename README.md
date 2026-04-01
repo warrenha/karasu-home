@@ -26,6 +26,14 @@ This adds the base 'karasu' to urls, so assets can be found using an absolute pa
 http://my-server.local/karasu
 ```
 
+### Testing
+Tests are written using Vitest & React Testing Library.
+
+To run the unit & integration tests:
+```
+pnpm test
+```
+
 ### Git & GitHub
 This project was initialized as follows.
 
