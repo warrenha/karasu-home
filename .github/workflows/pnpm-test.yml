@@ -20,11 +20,15 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
+          package-manager: pnpm
 
-      - name: Enable corepack and install pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
+      - name: Install pnpm (ensures executable exists)
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Check pnpm version
+        run: pnpm --version
 
       - name: Install dependencies
         run: pnpm install
