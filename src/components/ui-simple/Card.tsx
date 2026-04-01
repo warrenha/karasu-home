@@ -20,8 +20,10 @@ type Props = {
 const Card = (props: Props) => {
     const { className, title, children } = props;
     return (
-        <div className={cn('hello-world', className)} data-id={cn(props["data-id"])} >
-            <div className="bg-neutral-100 text-neutral-700 border border-[#c5c5c5] rounded-2xl shadow-[3px_3px_0_0_rgb(247,247,247)]">
+        <div data-id={cn(props["data-id"], "Card")} >
+            <div className={cn(
+                    "bg-neutral-100 text-neutral-700 border border-[#c5c5c5] rounded-2xl shadow-[3px_3px_0_0_rgb(247,247,247)]",
+                    className)} >
                 { title && (
                     <div className="pb-2 text-[15px] font-[500] py-4 px-5" >
                         { title }

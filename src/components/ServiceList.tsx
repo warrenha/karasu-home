@@ -10,7 +10,7 @@ import type { TextLine } from './ServiceTexts'
  *
  * - - - - - - - - - -
  */
-const ServicesList = () => {
+const ServiceList = () => {
     const renderTextLine = (t: TextLine) => {
         const icon = getIcon(t)
         const text = getText(t) || ''
@@ -26,10 +26,10 @@ const ServicesList = () => {
         )
     }
     return (
-        <Card data-id="ServicesList" title={serviceTitle} >
+        <Card data-id="ServiceList" title={serviceTitle} >
             { serviceTexts.map(t => renderTextLine(t)) }
         </Card>
     )
 }
 
-export default ServicesList
+export default ServiceList
