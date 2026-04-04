@@ -25,9 +25,9 @@ const Card = (props: Props) => {
                     "bg-neutral-100 text-neutral-700 border border-[#c5c5c5] rounded-2xl shadow-[3px_3px_0_0_rgb(247,247,247)]",
                     className)} >
                 { title && (
-                    <div className="pb-2 text-[15px] font-[500] py-4 px-5" >
+                    <h2 className="pb-2 text-[15px] font-[500] py-4 px-5" >
                         { title }
-                    </div>
+                    </h2>
                 )}
                 <div className="text-[14px] leading-[1.6] pt-2 pb-4 px-5">
                     { children }
