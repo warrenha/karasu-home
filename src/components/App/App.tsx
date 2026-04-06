@@ -1,14 +1,16 @@
+import { FrontPage } from '@/components/Pages/FrontPage'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import FrontPage from './FrontPage'
 
 const queryClient = new QueryClient()
 
 /*
- * - - - - - - - - - -
+ * - - - - - - - - - - - - - - -
  *
- * - - - - - - - - - -
+ * Application component.
+ *
+ * - - - - - - - - - - - - - - -
  */
-const App = () => {
+export const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
             <div data-id="App" className="w-full h-full bg-white">
@@ -17,5 +19,3 @@ const App = () => {
         </QueryClientProvider>
     )
 }
-
-export default App
