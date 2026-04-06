@@ -1,4 +1,4 @@
-import Card from '../ui-simple/Card'
+import { Card } from '@/components/ui/simple'
 import { serviceTexts } from './ServiceData'
 import { BulletLine } from './BulletLine'
 

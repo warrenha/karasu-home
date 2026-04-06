@@ -18,7 +18,7 @@ type Props =
  *
  * - - - - - - - - - -
  */
-const LabelIcon = (props: Props) => {
+export const LabelIcon = (props: Props) => {
     const { label, icon, className, children } = props
     return (
         <div data-id="LabelIcon" className={cn('flex items-center gap-2', className)}>
@@ -29,4 +29,3 @@ const LabelIcon = (props: Props) => {
     )
 }
 
-export default LabelIcon

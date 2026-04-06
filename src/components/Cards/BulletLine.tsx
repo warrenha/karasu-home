@@ -1,4 +1,4 @@
-import { getIcon, getText,  } from './ServiceData'
+import { getIcon, getText } from './ServiceData'
 
 import type { IconText } from './ServiceData'
 
@@ -15,16 +15,18 @@ type Props = {
  */
 export const BulletLine = (props: Props) => {
     const { line } = props
-    const icon = getIcon(line)  // ReactNode | null
-    const text = getText(line) || ''  // string
+    const icon = getIcon(line) // ReactNode | null
+    const text = getText(line) || '' // string
 
     return (
-        <div data-id="BulletLine" key={text} className="text-left">
-            { !text.length ? '\u00A0' : ( // &nbsp;
-                <div className="flex items-center gap-2">
-                    {icon}
-                    {text}
-                </div>
+        <div data-id="BulletLine" key={text} className="flex items-center gap-2 text-left">
+            {!text.length ? (
+                '\u00A0' // &nbsp;
+            ) : (
+            <>
+                {icon}
+                {text}
+            </>
             )}
         </div>
     )

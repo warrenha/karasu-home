@@ -1,5 +1,5 @@
 import { isObject, isString } from '@/utils/Utils'
-import { DataIcon, DbIcon, ToolIcon, UserIcon, PuzzleIcon } from '@/components/ui-simple'
+import { DataIcon, DbIcon, ToolIcon, UserIcon, PuzzleIcon } from '@/components/ui/simple'
 
 import type { ReactNode } from 'react'
 

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from '@/components/ui/input-group'
-import { Card, LabelIcon, SmileIcon } from '@/components/ui-simple'
+import { Card, LabelIcon, SmileIcon } from '@/components/ui/simple'
 
 import { usePostContactUs } from '@/api/api-contact'
 
