@@ -1,18 +1,17 @@
-import ContactCard from './ContactCard'
-import ServiceList from './ServiceList'
-import ThreeScene from '../three/ThreeScene'
+import { ContactCard, ServiceCard } from '@/components/Cards'
+import ThreeScene from '@/three/ThreeScene'
 
 import { cn } from "@/lib/utils"
 
 /*
- * - - - - - - - - - -
+ * - - - - - - - - - - - - - - -
  *
  * Front page of the website.
  *
- * - - - - - - - - - -
+ * - - - - - - - - - - - - - - -
  */
-const FrontPage = () => {
-    console.info('FrontPage RENDER')
+export const FrontPage = () => {
+    console.debug('FrontPage RENDER')
     return (
         <div
             data-id="FrontPage"
@@ -25,7 +24,7 @@ const FrontPage = () => {
             </div>
             <ThreeScene />
             <div className="flex flex-col items-stretch gap-[25px]">
-                <ServiceList />
+                <ServiceCard />
                 <ContactCard />
             </div>
             <div className="flex flex-col gap-2 text-base">
@@ -38,4 +37,3 @@ const FrontPage = () => {
     )
 }
 
-export default FrontPage

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from '@/components/ui/input-group'
-import { Card, LabelIcon, SmileIcon } from './ui-simple'
+import { Card, LabelIcon, SmileIcon } from '@/components/ui-simple'
 
 import { usePostContactUs } from '@/api/api-contact'
 
@@ -40,7 +40,7 @@ const defaultValues /*: FormSchema*/ = {
  *
  * - - - - - - - - - -
  */
-const ContactCard = () => {
+export const ContactCard = () => {
     const { contactUs, pending, success, error } = usePostContactUs()
     console.info(`[ContactCard] pending=${pending}, success=${success}, error=${error}`)
 
@@ -172,5 +172,3 @@ const ContactCard = () => {
         </Card>
     )
 }
-
-export default ContactCard
