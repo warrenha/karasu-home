@@ -1,3 +1,3 @@
-export * from './ContactCard'
-export * from './ServiceCard'
+export { ContactCard } from './ContactCard'
+export { ServiceCard } from './ServiceCard'
 // ...

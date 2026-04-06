@@ -18,7 +18,7 @@ export default defineConfig({
     test: {
         environment: 'jsdom',
         setupFiles: './test/vitest/setup-tests.ts',
-        // Don't run playwrite test as vitest tests:
+        // Don't run playwright test as vitest tests:
         exclude: [
             ...configDefaults.exclude,
             'test/playwright/*'

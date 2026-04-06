@@ -1,37 +1,13 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, useForm } from 'react-hook-form'
-import * as z from 'zod'
-
+import { Controller } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from '@/components/ui/input-group'
 import { Card, LabelIcon, SmileIcon } from '@/components/ui/simple'
 
-import { usePostContactUs } from '@/api/api-contact'
-
-import type { ContactMessage } from '@/models/ContactMessage'
+import { useContactForm } from '../ServiceCard/useContactForm'
 
 const Title = 'Contact us'
-
-const formSchema = z.object({
-    name: z.string()
-        .min(1, 'Name must be at least 1 character')
-        .max(50, 'Name must be at most 50 characters'),
-    email: z.email()
-        .min(5, 'Name must be at least 5 characters')
-        .max(50, 'Name must be at most 50 characters'),
-    message: z.string()
-        .min(5, 'Message must be at least 5 characters')
-        .max(1000, 'Message must be at most 1000 characters')
-})
-type FormSchema = typeof formSchema
-
-const defaultValues /*: FormSchema*/ = {
-    name: '',
-    email: '',
-    message: ''
-}
 
 /*
  * - - - - - - - - - -
@@ -41,19 +17,11 @@ const defaultValues /*: FormSchema*/ = {
  * - - - - - - - - - -
  */
 export const ContactCard = () => {
-    const { contactUs, pending, success, error } = usePostContactUs()
-    console.info(`[ContactCard] pending=${pending}, success=${success}, error=${error}`)
 
-    const form = useForm<z.infer<FormSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues
-    })
-
-    const onSubmit = (data: z.infer<FormSchema>) => {
-        console.info(`SUBMIT\n${JSON.stringify(data, null, 2)}`)
-        const message = data as ContactMessage
-        contactUs(message)
-    }
+    const {
+        form, onSubmit,
+        pending, success, error  // submit status
+    } = useContactForm()
 
     const disabled = success || error
 
@@ -165,9 +133,7 @@ export const ContactCard = () => {
                             render={renderMessage} />
                     </FieldGroup>
                 </form>
-                <div>
-                    {renderButtons()}
-                </div>
+                {renderButtons()}
             </div>
         </Card>
     )
