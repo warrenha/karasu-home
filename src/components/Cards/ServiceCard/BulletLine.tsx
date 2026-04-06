@@ -1,6 +1,6 @@
-import { getIcon, getText } from '../ServiceCard/ServiceData'
+import { getIcon, getText } from './serviceTexts'
 
-import type { IconText } from '../ServiceCard/ServiceData'
+import type { IconText } from './serviceTexts'
 
 type Props = {
     line?: IconText | null
@@ -19,7 +19,8 @@ export const BulletLine = (props: Props) => {
     const text = getText(line) || '' // string
 
     return (
-        <div data-id="BulletLine" key={text} className="flex items-center gap-2 text-left">
+        <div data-id="BulletLine" key={text}
+            className="flex items-center gap-2 text-left">
             {!text.length ? (
                 '\u00A0' // &nbsp;
             ) : (

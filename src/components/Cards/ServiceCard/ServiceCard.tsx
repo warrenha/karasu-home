@@ -1,6 +1,8 @@
 import { Card } from '@/components/ui/simple'
-import { serviceTexts } from './ServiceData'
-import { BulletLine } from '../ContactCard/BulletLine'
+import { serviceTexts } from './serviceTexts'
+import { BulletLine } from './BulletLine'
+
+import { getText } from './serviceTexts'
 
 /*
  * - - - - -  - - - - -  - - - - -
@@ -12,10 +14,9 @@ import { BulletLine } from '../ContactCard/BulletLine'
 export const ServiceCard = () => {
     return (
         <Card data-id="ServiceCard" title="Services" >
-            { serviceTexts.map(line => (
-                <BulletLine line={line} />
+            { serviceTexts.map((line, index) => (
+                <BulletLine line={line} key={getText(line)||`${index}`} />
             ))}
         </Card>
     )
 }
-
