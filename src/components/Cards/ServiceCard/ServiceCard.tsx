@@ -11,7 +11,7 @@ import { BulletLine } from '../ContactCard/BulletLine'
  */
 export const ServiceCard = () => {
     return (
-        <Card data-id="ServiceList" title="Services" >
+        <Card data-id="ServiceCard" title="Services" >
             { serviceTexts.map(line => (
                 <BulletLine line={line} />
             ))}

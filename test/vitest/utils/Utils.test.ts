@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import { isString } from '@/utils/Utils'
 
 // - - - - - Tests - - - - - //
