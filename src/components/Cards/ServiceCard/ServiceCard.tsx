@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/simple'
 import { serviceTexts } from './ServiceData'
-import { BulletLine } from './BulletLine'
+import { BulletLine } from '../ContactCard/BulletLine'
 
 /*
  * - - - - -  - - - - -  - - - - -

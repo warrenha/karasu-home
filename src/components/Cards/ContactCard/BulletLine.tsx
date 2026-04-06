@@ -1,6 +1,6 @@
-import { getIcon, getText } from './ServiceData'
+import { getIcon, getText } from '../ServiceCard/ServiceData'
 
-import type { IconText } from './ServiceData'
+import type { IconText } from '../ServiceCard/ServiceData'
 
 type Props = {
     line?: IconText | null
