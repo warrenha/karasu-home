@@ -1,4 +1,4 @@
-/* - - - - - String - - - - - //
+// - - - - - String - - - - - //
 
 /*
  * A little more readable...
@@ -20,6 +20,18 @@ export const firstString = (...list: any[]): string | null => {
     }
     return null;
 }
+
+// - - - - - Number - - - - - //
+
+export const isNumber = (n: any): n is number => (
+    typeof n === 'number'
+)
+
+// - - - - - Array - - - - - //
+
+export const isArray = (a: any): a is Array<any> => (
+    Array.isArray(a)
+)
 
 /* - - - - - Object - - - - - //
 
