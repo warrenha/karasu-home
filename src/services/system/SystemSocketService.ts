@@ -3,7 +3,8 @@ import ReconnectingWebSocket from "reconnecting-websocket"
 import type { SystemInfo } from './SystemInfo'
 import type { Message } from './Message'
 
-const WS_URL = 'ws://localhost:3000/ws'
+//const WS_URL = 'ws://localhost:3000/ws'
+const WS_URL = 'ws://82.71.20.56:3000/ws'
 
 type OnMessageFn = (data: SystemInfo) => void
 
