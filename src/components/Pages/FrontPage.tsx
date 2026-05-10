@@ -1,5 +1,5 @@
 import { ContactCard, ServiceCard } from '@/components/Cards'
-import ThreeScene from '@/three/ThreeScene'
+import { ThreeScene, TemperatureScene } from '@/three'
 import { SystemSection } from '@/components/Sections'
 
 import { cn } from "@/lib/utils"
@@ -24,9 +24,12 @@ export const FrontPage = () => {
                 <h2>Software consultancy, application design & engineering</h2>
             </div>
             <ThreeScene />
-            <SystemSection />
             <div className="flex flex-col items-stretch gap-[25px]">
                 <ServiceCard />
+            </div>
+            <SystemSection />
+            <TemperatureScene />
+            <div className="flex flex-col items-stretch gap-[25px] min-w-[450px]">
                 <ContactCard />
             </div>
             <div className="flex flex-col gap-2 text-base">

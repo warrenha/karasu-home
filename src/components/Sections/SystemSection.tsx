@@ -28,7 +28,7 @@ const SystemSection = () => {
     return (
         <div
             data-id="SystemSection"
-            className="w-full bg-white border-y-1 border-neutral-400 h-32">
+            className="w-full bg-white h-32">
             { texts.length === 0 ? (
                 <div>No Data</div>
             ) : texts.map(line => (
