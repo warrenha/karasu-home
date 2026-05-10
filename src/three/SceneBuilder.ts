@@ -12,12 +12,10 @@ export const createScene = (div: HTMLDivElement) => {
     const width = div.clientWidth
     const height = div.clientHeight
 
-    // Scene
     const scene = new THREE.Scene()
     scene.background = new THREE.Color(0xffffff)
     // scene.fog = new THREE.Fog(0xf0f0f0, 10, 50)
     
-    // Camera
     const createCamera = () => {
         const camera = new THREE.PerspectiveCamera(
             25,
@@ -32,7 +30,6 @@ export const createScene = (div: HTMLDivElement) => {
     }
     const camera = createCamera()
 
-    // Renderer
     const createRenderer = () => {
         const renderer = new THREE.WebGLRenderer({ antialias: true })
         renderer.setSize(width, height)
@@ -43,7 +40,6 @@ export const createScene = (div: HTMLDivElement) => {
     }
     const renderer = createRenderer()
 
-    // Lighting
     const addLighting = () => {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
         scene.add(ambientLight)
