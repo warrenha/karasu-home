@@ -16,12 +16,12 @@ type Props = {
 export const BulletLine = (props: Props) => {
     const { line } = props
     const icon = getIcon(line) // ReactNode | null
-    const text = getText(line) || '' // string
+    const text = getText(line) // string | ReactNode | null
 
     return (
-        <div data-id="BulletLine" key={text}
+        <div data-id="BulletLine"
             className="flex items-center gap-2 text-left">
-            {!text.length ? (
+            { !text ? (
                 '\u00A0' // &nbsp;
             ) : (
             <>
