@@ -32,7 +32,7 @@ const SystemSection = () => {
             { texts.length === 0 ? (
                 <div>No Data</div>
             ) : texts.map(line => (
-                <div>{line}</div>
+                <div key={line} >{line}</div>
             ))}
         </div>
     )
