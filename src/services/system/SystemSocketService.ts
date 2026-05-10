@@ -4,7 +4,8 @@ import type { SystemInfo } from './SystemInfo'
 import type { Message } from './Message'
 
 //const WS_URL = 'ws://localhost:3000/ws'
-const WS_URL = 'ws://api.karasu.co.uk:3000/ws'
+//const WS_URL = 'ws://api.karasu.co.uk:3000/ws'
+const WS_URL = 'wss://api.karasu.co.uk/ws'
 
 type OnMessageFn = (data: SystemInfo) => void
 
