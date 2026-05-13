@@ -1,5 +1,5 @@
 import { ContactCard, ServiceCard } from '@/components/Cards'
-//import { WireframeScene } from '@/three/wireframe'
+import { WireframeScene } from '@/three/wireframe'
 import { CoreTempsScene } from '@/three/system/'
 //import { SystemSection } from '@/components/Sections'
 
@@ -33,7 +33,7 @@ export const FrontPage = () => {
                 <h1>Karasu Software</h1>
                 <h2>Software consultancy, application design & engineering</h2>
             </div>
-            {/* <WireframeScene /> */}
+            <WireframeScene />
             <div className="flex flex-col items-stretch gap-[25px]">
                 <ServiceCard />
             </div>

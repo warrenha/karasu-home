@@ -5,7 +5,7 @@ import { memo, useCallback, useRef } from 'react'
 
 import type { Scene } from '../common/Scene'
 
-const NoCores: number[] = [10, 20, 30, 40]
+const NoCores: number[] = []
 
 /*
  * - - - - - - - - - - - - - - -
