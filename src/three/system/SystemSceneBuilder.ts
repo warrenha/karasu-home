@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 
-import { limitTemperature, colorForTemperature, makeLabel, makeGroundLabel, disposeSceneObject } from '../common'
-
-import type { DisposableSceneObject, Size } from '../common'
+import { limitTemperature, colorForTemperature, makeLabel, makeGroundLabel } from '../common'
+import { /*getSceneSize, */disposeScene, disposeSceneObject, type DisposableSceneObject } from '../common'
+import type { Scene, Size } from '../common'
 
 const BarDepth = 0.55
 const MaxBarHeight = 5
@@ -15,12 +15,10 @@ const BaseY = 0
 export const createScene = (
     div: HTMLDivElement,
     coreTemperatures: number[]  // [48, 38, 64, 81, 96]
-) => {
+): Scene => {
     console.debug('Creating 3d temperature scene...')
 
-    const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0x202020)
-
+    //const { width, height, aspect } = getSceneSize(div)
     const getSceneSize = (): Size => {
         const rect = div.getBoundingClientRect()
         return {
@@ -31,9 +29,12 @@ export const createScene = (
     }
     const { width, height } = getSceneSize()
 
+    const scene = new THREE.Scene()
+    scene.background = new THREE.Color(0x202020)
+
     const createCamera = () => {
         const aspect = width / height
-        const camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 100)  // fov (degrees), .., near plane, far plane
+        const camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 100)  // fov (degrees), near/far plane
         camera.position.set(0, 6.7, 6.6)
         camera.lookAt(0, 2.85, -0.05)
         return camera;
@@ -105,7 +106,7 @@ export const createScene = (
     const setCoreTemperatures = (temperatures: number[]) => {
         clearBars()
 
-        const values: number[] = temperatures.map(limitTemperature)
+        const values = temperatures.map(limitTemperature)
         const spacing = 1.1
         const totalWidth = (values.length - 1) * spacing
 
@@ -144,12 +145,26 @@ export const createScene = (
     }
     window.addEventListener('resize', onResize)
 
-    const animate = () => {
-        renderer.render(scene, camera)
-        requestAnimationFrame(animate)
-    }
-    animate()
+    //const animate = () => {
+    //    renderer.render(scene, camera)
+    //    requestAnimationFrame(animate)
+    //}
+    //animate()
 
-    return renderer
+    const dispose = () => {
+        if (div && renderer.domElement) {
+            div.removeChild(renderer.domElement)
+        }
+        //controls.dispose()
+        disposeScene(scene)
+        //renderer.setAnimationLoop(null)
+        renderer.dispose()
+        //renderer.forceContextLoss()
+    }
+
+    return {
+        renderer,  // THREE.WebGLRenderer
+        dispose
+    }
 }
 

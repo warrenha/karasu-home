@@ -1,7 +1,9 @@
 import { ContactCard, ServiceCard } from '@/components/Cards'
-import { WireframeScene } from '@/three/wireframe'
-//import { TemperatureScene } from '@/three/system'
-import { SystemSection } from '@/components/Sections'
+//import { WireframeScene } from '@/three/wireframe'
+//import { SystemScene } from '@/three/system/'
+//import TemperatureScene from '@/three/system/TemperatureScene'
+import TestScene from '@/three/system/TestScene'
+//import { SystemSection } from '@/components/Sections'
 
 import { cn } from "@/lib/utils"
 import { useEffect } from 'react'
@@ -33,14 +35,13 @@ export const FrontPage = () => {
                 <h1>Karasu Software</h1>
                 <h2>Software consultancy, application design & engineering</h2>
             </div>
-            <WireframeScene />
+            {/* <WireframeScene /> */}
             <div className="flex flex-col items-stretch gap-[25px]">
                 <ServiceCard />
             </div>
-            <SystemSection />
-            {/*
-            <TemperatureScene />
-            */}
+            { /* <SystemSection /> */ }
+            {/* <TemperatureScene /> */}
+            <TestScene />
             <div className="flex flex-col items-stretch gap-[25px] min-w-[450px]">
                 <ContactCard />
             </div>

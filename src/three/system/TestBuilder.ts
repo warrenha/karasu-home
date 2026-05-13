@@ -1,8 +1,11 @@
 import * as THREE from 'three'
+import { limitTemperature, colorForTemperature } from '../common/TemperatureUtils'
+import { makeLabel, makeGroundLabel } from '../common/LabelUtils'
+import type { Size } from '../common/SceneSize'
 
-import { limitTemperature, colorForTemperature, makeLabel, makeGroundLabel, disposeSceneObject } from '../common'
-
-import type { DisposableSceneObject, Size } from '../common'
+import { disposeSceneObject, type DisposableSceneObject } from '../common/DisposeUtils'
+import { disposeScene } from '../common/SceneUtils'
+import type { Scene } from '../common/Scene'
 
 const BarDepth = 0.55
 const MaxBarHeight = 5
@@ -15,7 +18,7 @@ const BaseY = 0
 export const createScene = (
     div: HTMLDivElement,
     coreTemperatures: number[]  // [48, 38, 64, 81, 96]
-) => {
+): Scene => {
     console.debug('Creating 3d temperature scene...')
 
     const scene = new THREE.Scene()
@@ -105,7 +108,7 @@ export const createScene = (
     const setCoreTemperatures = (temperatures: number[]) => {
         clearBars()
 
-        const values: number[] = temperatures.map(limitTemperature)
+        const values = temperatures.map(limitTemperature)
         const spacing = 1.1
         const totalWidth = (values.length - 1) * spacing
 
@@ -150,6 +153,19 @@ export const createScene = (
     }
     animate()
 
-    return renderer
-}
+    const dispose = () => {
+        if (div && renderer.domElement) {
+            div.removeChild(renderer.domElement)
+        }
+        //controls.dispose()
+        disposeScene(scene)
+        //renderer.setAnimationLoop(null)
+        renderer.dispose()
+        //renderer.forceContextLoss()
+    }
 
+    return {
+        renderer,  // THREE.WebGLRenderer
+        dispose
+    }
+}

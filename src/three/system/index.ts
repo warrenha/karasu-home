@@ -1,1 +1,1 @@
-export { default as TemperatureScene } from './TemperatureScene'
+export { default as SystemScene } from './SystemScene'

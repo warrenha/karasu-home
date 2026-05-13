@@ -2,9 +2,9 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 import { createShapes } from './ShapeBuilder'
-import { disposeScene } from './SceneUtils'
+import { disposeScene, getSceneSize } from '../common'
 
-import type { Scene } from './Scene'
+import type { Scene } from '../common'
 
 /*
  * Creates the complete 3d scene, with camera, lighting and renderer.
@@ -14,10 +14,7 @@ export const createScene = (
 ): Scene => {
     console.debug('Creating 3d scene...')
 
-    // Container dimensions
-    const width = div.clientWidth
-    const height = div.clientHeight
-    const aspect = width / height
+    const { width, height, aspect } = getSceneSize(div)
 
     const scene = new THREE.Scene()
     scene.background = new THREE.Color(0xffffff)
@@ -103,10 +100,10 @@ export const createScene = (
     addAnimation()
 
     const dispose = () => {
-        controls.dispose()
         if (div && renderer.domElement) {
             div.removeChild(renderer.domElement)
         }
+        controls.dispose()
         disposeScene(scene)
         renderer.setAnimationLoop(null)
         renderer.dispose()

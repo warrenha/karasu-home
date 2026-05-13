@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { createScene } from './SceneBuilder'
 import { memo, useCallback, useRef } from 'react'
 
-import type { Scene } from './Scene'
+import type { Scene } from '../common'
 
 /*
  * - - - - - - - - - - - - - - -
@@ -11,6 +11,7 @@ import type { Scene } from './Scene'
  * - - - - - - - - - - - - - - -
  */
 const WireframeScene = () => {
+
     // Causes a re-render when the ref is set.
     const [ref, _setRef] = useState<HTMLDivElement | null>(null)
     console.debug(`[WireframeScene] RENDER (ref=${ref !== null})`)
@@ -31,7 +32,7 @@ const WireframeScene = () => {
     const sceneRef = useRef<Scene | null>(null)
     const [sceneIndex, setSceneIndex] = useState(0)
 
-    // Create the 3d scene
+    // Create the 3d scene...
     useEffect(() => {
         if (ref && !sceneRef.current) {
             try {
@@ -40,7 +41,7 @@ const WireframeScene = () => {
                 setSceneIndex(sceneIndex+1)  // re-render
             }
             catch (e) {
-                console.warn('ERROR in createScene')
+                console.warn('[WireframeScene] ERROR in createScene')
                 console.warn(e)
             }
         }
