@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { createScene } from './SceneBuilder'
+import { createScene } from './WireframeBuilder'
 import { memo, useCallback, useRef } from 'react'
 
 import type { Scene } from '../common'
