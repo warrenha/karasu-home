@@ -145,11 +145,11 @@ export const createScene = (
     }
     window.addEventListener('resize', onResize)
 
-    //const animate = () => {
-    //    renderer.render(scene, camera)
-    //    requestAnimationFrame(animate)
-    //}
-    //animate()
+    const animate = () => {
+        renderer.render(scene, camera)
+        requestAnimationFrame(animate)
+    }
+    animate()
 
     const dispose = () => {
         if (div && renderer.domElement) {
