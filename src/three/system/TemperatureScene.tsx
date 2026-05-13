@@ -23,8 +23,10 @@ const TemperatureScene = () => {
     // Create the 3d scene on mount
     useEffect(() => {
         if (cores.length > 0) {
+            console.debug('[TemperatureScene] CREATE SCENE')
             const renderer = ref ? createScene(ref, cores) : null
             return () => {
+                console.debug('[TemperatureScene] DISPOSE SCENE')
                 if (ref && renderer?.domElement) {
                     ref.removeChild(renderer?.domElement)
                 }
@@ -32,6 +34,13 @@ const TemperatureScene = () => {
             }
         }
     }, [ref, cores])
+
+    useEffect(() => {
+        console.debug('[TemperatureScene] MOUNT')
+        return () => {
+            console.debug('[TemperatureScene] UNMOUNT')
+        }
+    }, [])
 
     return (
         <div
