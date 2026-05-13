@@ -1,7 +1,8 @@
 import * as THREE from 'three'
-import { limitTemperature, colorForTemperature, makeLabel, makeGroundLabel, disposeSceneObject } from './TemperatureUtils'
 
-import type { DisposableSceneObject, Size } from './TemperatureUtils'
+import { limitTemperature, colorForTemperature, makeLabel, makeGroundLabel } from '../common'
+import { /*getSceneSize, */disposeScene, disposeSceneObject, type DisposableSceneObject } from '../common'
+import type { Scene, Size } from '../common'
 
 const BarDepth = 0.55
 const MaxBarHeight = 5
@@ -12,26 +13,27 @@ const BaseY = 0
  * Creates the complete 3d scene, with camera, lighting and renderer.
  */
 export const createScene = (
-    div: HTMLDivElement,
-    coreTemperatures: number[]  // [48, 38, 64, 81, 96]
-) => {
+    div: HTMLDivElement
+): Scene => {
     console.debug('Creating 3d temperature scene...')
 
-    const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0x202020)
-
+    //const { width, height, aspect } = getSceneSize(div)
     const getSceneSize = (): Size => {
         const rect = div.getBoundingClientRect()
         return {
             width: Math.max(1, rect.width),
-            height: Math.max(1, rect.height)
+            height: Math.max(1, rect.height),
+            aspect: 0
         }
     }
     const { width, height } = getSceneSize()
 
+    const scene = new THREE.Scene()
+    scene.background = new THREE.Color(0x202020)
+
     const createCamera = () => {
         const aspect = width / height
-        const camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 100)  // fov (degrees), .., near plane, far plane
+        const camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 100)  // fov (degrees), near/far plane
         camera.position.set(0, 6.7, 6.6)
         camera.lookAt(0, 2.85, -0.05)
         return camera;
@@ -132,7 +134,10 @@ export const createScene = (
             group.add(coreLabel)
         })
     }
-    setCoreTemperatures(coreTemperatures)
+
+    const update = (temperatures: number[]) => {  // [48, 38, 64, 81, 96])
+        setCoreTemperatures(temperatures)
+    }
 
     const onResize = () => {
         const size = getSceneSize()
@@ -142,12 +147,40 @@ export const createScene = (
     }
     window.addEventListener('resize', onResize)
 
-    const animate = () => {
-        renderer.render(scene, camera)
-        requestAnimationFrame(animate)
-    }
-    animate()
+    //const animate = () => {
+    //    renderer.render(scene, camera)
+    //    requestAnimationFrame(animate)
+    //}
+    //animate()
 
-    return renderer
+    // https://threejs.org/docs/#Global.onAnimationCallback
+    // time  A timestamp indicating the end time of the previous frame's rendering.
+    const onAnimation = (time: any) => {
+        //controls.update()
+        renderer.render(scene, camera)
+    }
+
+    const addAnimation = () => {
+        // https://threejs.org/docs/#WebGLRenderer.setAnimationLoop
+        renderer.setAnimationLoop(onAnimation)
+    }
+    addAnimation()
+
+    const dispose = () => {
+        if (div && renderer.domElement) {
+            div.removeChild(renderer.domElement)
+        }
+        //controls.dispose()
+        disposeScene(scene)
+        //renderer.setAnimationLoop(null)
+        renderer.dispose()
+        //renderer.forceContextLoss()
+    }
+
+    return {
+        renderer,  // THREE.WebGLRenderer
+        dispose,
+        update
+    }
 }
 

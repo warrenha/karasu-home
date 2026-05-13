@@ -1,8 +1,10 @@
 import { ContactCard, ServiceCard } from '@/components/Cards'
-import { ThreeScene, TemperatureScene } from '@/three'
-import { SystemSection } from '@/components/Sections'
+import { WireframeScene } from '@/three/wireframe'
+import { CoreTempsScene } from '@/three/system/'
+//import { SystemSection } from '@/components/Sections'
 
 import { cn } from "@/lib/utils"
+import { useEffect } from 'react'
 
 /*
  * - - - - - - - - - - - - - - -
@@ -12,7 +14,15 @@ import { cn } from "@/lib/utils"
  * - - - - - - - - - - - - - - -
  */
 export const FrontPage = () => {
-    console.debug('FrontPage RENDER')
+
+    console.debug('[FrontPage] RENDER')
+    useEffect(() => {
+        console.debug('[FrontPage] MOUNT')
+        return () => {
+            console.debug('[FrontPage] UNMOUNT')
+        }
+    }, [])
+
     return (
         <div
             data-id="FrontPage"
@@ -23,12 +33,12 @@ export const FrontPage = () => {
                 <h1>Karasu Software</h1>
                 <h2>Software consultancy, application design & engineering</h2>
             </div>
-            <ThreeScene />
+            <WireframeScene />
             <div className="flex flex-col items-stretch gap-[25px]">
                 <ServiceCard />
             </div>
-            <SystemSection />
-            <TemperatureScene />
+            { /* <SystemSection /> */ }
+            <CoreTempsScene />
             <div className="flex flex-col items-stretch gap-[25px] min-w-[450px]">
                 <ContactCard />
             </div>

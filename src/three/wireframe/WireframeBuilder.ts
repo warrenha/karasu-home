@@ -1,32 +1,30 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+
 import { createShapes } from './ShapeBuilder'
+import { disposeScene, getSceneSize } from '../common'
+
+import type { Scene } from '../common'
 
 /*
  * Creates the complete 3d scene, with camera, lighting and renderer.
  */
-export const createScene = (div: HTMLDivElement) => {
+export const createScene = (
+    div: HTMLDivElement
+): Scene => {
     console.debug('Creating 3d scene...')
 
-    // Container dimensions
-    const width = div.clientWidth
-    const height = div.clientHeight
+    const { width, height, aspect } = getSceneSize(div)
 
     const scene = new THREE.Scene()
     scene.background = new THREE.Color(0xffffff)
-    // scene.fog = new THREE.Fog(0xf0f0f0, 10, 50)
     
     const createCamera = () => {
-        const camera = new THREE.PerspectiveCamera(
-            25,
-            width / height,
-            0.1,
-            1000
-        )
+        const camera = new THREE.PerspectiveCamera(25, aspect, 0.1, 1000)
         camera.position.set(0, 4, 7)
         // Has no effect, use controls.target instead.
         //camera.lookAt(0, 10, 0)
-        return camera;
+        return camera
     }
     const camera = createCamera()
 
@@ -36,7 +34,7 @@ export const createScene = (div: HTMLDivElement) => {
         renderer.setPixelRatio(window.devicePixelRatio)
         //renderer.shadowMap.enabled = true
         div.appendChild(renderer.domElement)
-        return renderer;
+        return renderer
     }
     const renderer = createRenderer()
 
@@ -57,24 +55,11 @@ export const createScene = (div: HTMLDivElement) => {
         hemiLight.position.set(0, 20, 0)
         scene.add(hemiLight)
     }
-    addLighting();
+    addLighting()
 
     const addGround = () => {
-        //const plane = new THREE.Mesh(
-        //    new THREE.PlaneGeometry(10, 10),
-        //    new THREE.MeshPhongMaterial({ color: 0xffffff, depthWrite: false })
-        //    //new THREE.MeshStandardMaterial({ color: 0xffffff })
-        //);
-        //plane.position.set(0, 0, -10)
-        //plane.rotation.x = -Math.PI / 2;
-        //plane.rotation.x = -Math.PI / 8;
-        //plane.receiveShadow = true;
-        //scene.add(plane);
-
-        const grid = new THREE.GridHelper(35, 35, 0xff0000, 0xe0e0e0);
-        grid.rotation.x = Math.PI / 8;
-        //(grid.material as THREE.Material).opacity = 0.2;
-        //(grid.material as THREE.Material).transparent = true;
+        const grid = new THREE.GridHelper(35, 35, 0xff0000, 0xe0e0e0)
+        grid.rotation.x = Math.PI / 8
         scene.add(grid)
     }
     addGround()
@@ -86,14 +71,20 @@ export const createScene = (div: HTMLDivElement) => {
         }
         return shapes
     }
-    const shapes = addShapes();
+    const shapes = addShapes()
 
-    // Controls
-    const controls = new OrbitControls(camera, renderer.domElement)
-    controls.target = new THREE.Vector3(0, 4, 0)
-    controls.update();
+    const addControls = () => {
+        // https://threejs.org/docs/#OrbitControls
+        const controls = new OrbitControls(camera, renderer.domElement)
+        controls.target = new THREE.Vector3(0, 4, 0)
+        controls.update()
+        return controls
+    }
+    const controls = addControls()
 
-    const animate = (time: any) => {
+    // https://threejs.org/docs/#Global.onAnimationCallback
+    // time  A timestamp indicating the end time of the previous frame's rendering.
+    const onAnimation = (time: any) => {
         for (const shape of shapes) {
             shape.rotation.x = time / 15000
             shape.rotation.y = time / 5000
@@ -103,9 +94,24 @@ export const createScene = (div: HTMLDivElement) => {
     }
 
     const addAnimation = () => {
-        renderer.setAnimationLoop(animate)
+        // https://threejs.org/docs/#WebGLRenderer.setAnimationLoop
+        renderer.setAnimationLoop(onAnimation)
     }
-    addAnimation();
+    addAnimation()
 
-    return renderer;
+    const dispose = () => {
+        if (div && renderer.domElement) {
+            div.removeChild(renderer.domElement)
+        }
+        controls.dispose()
+        disposeScene(scene)
+        renderer.setAnimationLoop(null)
+        renderer.dispose()
+        //renderer.forceContextLoss()
+    }
+
+    return {
+        renderer,  // THREE.WebGLRenderer
+        dispose
+    }
 }

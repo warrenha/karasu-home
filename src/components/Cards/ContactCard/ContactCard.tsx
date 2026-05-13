@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from '@/components/ui/input-group'
 import { Card, LabelIcon, SmileIcon } from '@/components/ui/simple'
 
-import { useContactForm } from '../ServiceCard/useContactForm'
+import { useContactForm } from './useContactForm'
 
 const Title = 'Contact us'
 

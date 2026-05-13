@@ -30,7 +30,7 @@ export const createShapes = () => {
         const material2 = new THREE.LineBasicMaterial({ color: 0x404040 })
         const lines = new THREE.LineSegments(edges, material2)
         return [lines]
-    }*/
+    }*/ /* Hello */
 
     const createBall = () => {
         const geometry = new THREE.SphereGeometry(Radius, 32, 16)
