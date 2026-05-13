@@ -15,6 +15,7 @@ const WireframeScene = () => {
     const [ref, _setRef] = useState<HTMLDivElement | null>(null)
     console.debug(`[WireframeScene] RENDER (ref=${ref !== null})`)
 
+    // useCallback prevents repeated calls to setRef.
     const setRef = useCallback((div: HTMLDivElement | null) => {
         console.debug(`[WireframeScene] SET ref ${div !== null}`)
         _setRef(div)
@@ -46,10 +47,7 @@ const WireframeScene = () => {
         return () => {
             if (sceneRef.current) {
                 console.debug('[WireframeScene] DISPOSE SCENE')
-                if (ref && sceneRef.current.renderer?.domElement) {
-                    ref.removeChild(sceneRef.current.renderer.domElement)
-                }
-                sceneRef.current.renderer?.dispose()
+                sceneRef.current.dispose()  // And detach from the div
                 sceneRef.current = null
             }
         }
