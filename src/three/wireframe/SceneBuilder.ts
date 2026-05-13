@@ -1,11 +1,14 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { createShapes } from './ShapeBuilder'
+import type { Scene } from './Scene'
 
 /*
  * Creates the complete 3d scene, with camera, lighting and renderer.
  */
-export const createScene = (div: HTMLDivElement) => {
+export const createScene = (
+    div: HTMLDivElement
+): Scene => {
     console.debug('Creating 3d scene...')
 
     // Container dimensions
@@ -107,5 +110,7 @@ export const createScene = (div: HTMLDivElement) => {
     }
     addAnimation();
 
-    return renderer;
+    return {
+        renderer  // THREE.WebGLRenderer
+    }
 }

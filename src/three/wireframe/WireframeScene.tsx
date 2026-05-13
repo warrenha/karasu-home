@@ -1,27 +1,24 @@
 import { useEffect, useState } from 'react'
 import { createScene } from './SceneBuilder'
+import { memo, useCallback, useRef } from 'react'
+
+import type { Scene } from './Scene'
 
 /*
  * - - - - - - - - - - - - - - -
  *
+ * 
  * - - - - - - - - - - - - - - -
  */
 const WireframeScene = () => {
-    const [ref, setRef] = useState<HTMLDivElement | null>(null)
-    console.debug(`ThreeScene ref=${ref === null}`)
+    // Causes a re-render when the ref is set.
+    const [ref, _setRef] = useState<HTMLDivElement | null>(null)
+    console.debug(`[WireframeScene] RENDER (ref=${ref !== null})`)
 
-    // Create the 3d scene on mount
-    useEffect(() => {
-        console.debug('[WireframeScene] CREATE SCENE')
-        const renderer = ref ? createScene(ref) : null
-        return () => {
-            console.debug('[WireframeScene] DISPOSE SCENE')
-            if (ref && renderer?.domElement) {
-                ref.removeChild(renderer?.domElement)
-            }
-            renderer?.dispose()
-        }
-    }, [ref])
+    const setRef = useCallback((div: HTMLDivElement | null) => {
+        console.debug(`[WireframeScene] SET ref ${div !== null}`)
+        _setRef(div)
+    }, [])
 
     useEffect(() => {
         console.debug('[WireframeScene] MOUNT')
@@ -29,6 +26,34 @@ const WireframeScene = () => {
             console.debug('[WireframeScene] UNMOUNT')
         }
     }, [])
+
+    const sceneRef = useRef<Scene | null>(null)
+    const [sceneIndex, setSceneIndex] = useState(0)
+
+    // Create the 3d scene
+    useEffect(() => {
+        if (ref && !sceneRef.current) {
+            try {
+                console.debug('[WireframeScene] CREATE SCENE')
+                sceneRef.current = createScene(ref)  // Scene
+                setSceneIndex(sceneIndex+1)  // re-render
+            }
+            catch (e) {
+                console.warn('ERROR in createScene')
+                console.warn(e)
+            }
+        }
+        return () => {
+            if (sceneRef.current) {
+                console.debug('[WireframeScene] DISPOSE SCENE')
+                if (ref && sceneRef.current.renderer?.domElement) {
+                    ref.removeChild(sceneRef.current.renderer.domElement)
+                }
+                sceneRef.current.renderer?.dispose()
+                sceneRef.current = null
+            }
+        }
+    }, [ref])
 
     return (
         <div
@@ -39,4 +64,4 @@ const WireframeScene = () => {
     )
 }
 
-export default WireframeScene
+export default memo(WireframeScene)

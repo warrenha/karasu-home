@@ -18,7 +18,7 @@ const TemperatureScene = () => {
     const cores = data?.cores || NoCores  // number[]
 
     const [ref, setRef] = useState<HTMLDivElement | null>(null)
-    console.debug(`TemperatureScene ref=${ref === null}`)
+    console.debug(`[TemperatureScene] ref=${ref === null}`)
 
     // Create the 3d scene on mount
     useEffect(() => {

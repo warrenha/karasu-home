@@ -98,3 +98,15 @@ git push -u origin main
 ```
 
 Delete me v0.1
+
+## Install pnpm
+https://pnpm.io/installation#on-posix-systems
+```
+npm install --global corepack@latest
+
+corepack enable pnpm
+
+# Set the packageManager in package.json
+npm pkg set packageManager="pnpm@$(pnpm --version)"
+
+```

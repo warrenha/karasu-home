@@ -1,6 +1,6 @@
 import { ContactCard, ServiceCard } from '@/components/Cards'
 import { WireframeScene } from '@/three/wireframe'
-import { TemperatureScene } from '@/three/system'
+//import { TemperatureScene } from '@/three/system'
 import { SystemSection } from '@/components/Sections'
 
 import { cn } from "@/lib/utils"
@@ -16,8 +16,6 @@ import { useEffect } from 'react'
 export const FrontPage = () => {
 
     console.debug('[FrontPage] RENDER')
-
-    // Help find an issue with the Three.js plugin failing.
     useEffect(() => {
         console.debug('[FrontPage] MOUNT')
         return () => {
@@ -40,7 +38,9 @@ export const FrontPage = () => {
                 <ServiceCard />
             </div>
             <SystemSection />
+            {/*
             <TemperatureScene />
+            */}
             <div className="flex flex-col items-stretch gap-[25px] min-w-[450px]">
                 <ContactCard />
             </div>
