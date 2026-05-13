@@ -44,7 +44,7 @@ const CoreTempsScene = () => {
         if (ref && !sceneRef.current) {
             try {
                 console.debug('[CoreTempsScene] CREATE SCENE')
-                sceneRef.current = createScene(ref, NoCores)  // Scene
+                sceneRef.current = createScene(ref)  // Scene
                 setSceneIndex(sceneIndex+1)  // re-render
             }
             catch (e) {
@@ -64,7 +64,7 @@ const CoreTempsScene = () => {
     useEffect(() => {
         if (sceneRef.current && cores.length > 0) {  // and not the first, as done in createScene??
             console.debug('[CoreTempsScene] TODO UPDATE CORES')
-            // sceneRef.current.update(cores)
+            sceneRef.current.update?.(cores)
         }
     }, [cores])
 

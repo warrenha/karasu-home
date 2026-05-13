@@ -13,8 +13,7 @@ const BaseY = 0
  * Creates the complete 3d scene, with camera, lighting and renderer.
  */
 export const createScene = (
-    div: HTMLDivElement,
-    coreTemperatures: number[]  // [48, 38, 64, 81, 96]
+    div: HTMLDivElement
 ): Scene => {
     console.debug('Creating 3d temperature scene...')
 
@@ -135,7 +134,10 @@ export const createScene = (
             group.add(coreLabel)
         })
     }
-    setCoreTemperatures(coreTemperatures)
+
+    const update = (temperatures: number[]) => {  // [48, 38, 64, 81, 96])
+        setCoreTemperatures(temperatures)
+    }
 
     const onResize = () => {
         const size = getSceneSize()
@@ -145,11 +147,24 @@ export const createScene = (
     }
     window.addEventListener('resize', onResize)
 
-    const animate = () => {
+    //const animate = () => {
+    //    renderer.render(scene, camera)
+    //    requestAnimationFrame(animate)
+    //}
+    //animate()
+
+    // https://threejs.org/docs/#Global.onAnimationCallback
+    // time  A timestamp indicating the end time of the previous frame's rendering.
+    const onAnimation = (time: any) => {
+        //controls.update()
         renderer.render(scene, camera)
-        requestAnimationFrame(animate)
     }
-    animate()
+
+    const addAnimation = () => {
+        // https://threejs.org/docs/#WebGLRenderer.setAnimationLoop
+        renderer.setAnimationLoop(onAnimation)
+    }
+    addAnimation()
 
     const dispose = () => {
         if (div && renderer.domElement) {
@@ -164,7 +179,8 @@ export const createScene = (
 
     return {
         renderer,  // THREE.WebGLRenderer
-        dispose
+        dispose,
+        update
     }
 }
 
