@@ -1,6 +1,6 @@
 import { FrontPage } from '@/components/Pages/FrontPage'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-//import { useSystemStream } from '@/services/system'
+import { useSystemStream } from '@/services/system'
 const queryClient = new QueryClient()
 
 /*
@@ -13,7 +13,7 @@ const queryClient = new QueryClient()
 export const App = () => {
 
     // Connect to the websocket, start receiving live system information.
-    //useSystemStream()
+    useSystemStream()
 
     return (
         <QueryClientProvider client={queryClient}>

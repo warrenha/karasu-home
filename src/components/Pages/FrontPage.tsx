@@ -1,10 +1,9 @@
 import { ContactCard, ServiceCard } from '@/components/Cards'
 import { WireframeScene } from '@/three/wireframe'
-//import { CoreTempsScene } from '@/three/system/'
+import { CoreTempsScene } from '@/three/system/'
 //import { SystemSection } from '@/components/Sections'
 
 import { cn } from "@/lib/utils"
-//import { useEffect } from 'react'
 
 /*
  * - - - - - - - - - - - - - - -
@@ -14,15 +13,6 @@ import { cn } from "@/lib/utils"
  * - - - - - - - - - - - - - - -
  */
 export const FrontPage = () => {
-
-    //useEffect(() => {
-    //    console.debug('[FrontPage] MOUNT')
-    //    return () => {
-    //        console.debug('[FrontPage] UNMOUNT')
-    //    }
-    //}, [])
-    //console.debug('[FrontPage] RENDER')
-
     return (
         <div
             data-id="FrontPage"
@@ -38,7 +28,7 @@ export const FrontPage = () => {
                 <ServiceCard />
             </div>
             { /* <SystemSection /> */ }
-            {/* <CoreTempsScene /> */ }
+            <CoreTempsScene />
             <div className="flex flex-col items-stretch gap-[25px] min-w-[450px]">
                 <ContactCard />
             </div>

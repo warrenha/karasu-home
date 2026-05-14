@@ -15,7 +15,7 @@ export type WireframePayload = {}  // not used, additional data for update
  */
 export const createWireframeScene = (): SceneI<WireframePayload> => {
 
-    // TODO put into a typed object? SceneContext
+    // TODO put into a typed object? SceneContext?
     let div: HTMLDivElement | null = null
     let width = 1
     let height = 1
@@ -35,17 +35,14 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
         width = size.width  // ({ width, height, aspect } = size);  // SceneSize
         height = size.height
         aspect = size.aspect
-        console.debug(`addContainer SIZE=${JSON.stringify(size)}`)
     }
 
     const addScene = () => {
-        console.debug('addScene')
         scene = new THREE.Scene()
         scene.background = new THREE.Color(0xffffff)
     }
 
     const addCamera = () => {
-        console.debug('addCamera')
         camera = new THREE.PerspectiveCamera(25, aspect, 0.1, 1000)
         camera.position.set(0, 4, 7)
         // Has no effect, use controls.target instead.
@@ -60,12 +57,11 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
         renderer.setPixelRatio(window.devicePixelRatio)
         //renderer.shadowMap.enabled = true
         div.appendChild(renderer.domElement)
-        console.debug('[WireframeScene] Renderer added, canvas size:', renderer.domElement.width, renderer.domElement.height)
+        console.debug('[WireframeScene] Canvas size:', renderer.domElement.width, renderer.domElement.height)
     }
 
     const addLighting = () => {
         if (!scene) return
-        console.debug('addLighting')
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
         scene!.add(ambientLight)
     
@@ -85,7 +81,6 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
 
     const addGround = () => {
         if (!scene) return
-        console.debug('addGround')
         const grid = new THREE.GridHelper(35, 35, 0xff0000, 0xe0e0e0)
         grid.rotation.x = Math.PI / 8
         scene.add(grid)
@@ -93,7 +88,6 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
 
     const addShapes = () => {
         if (!scene) return
-        console.debug('addShapes')
         shapes = createShapes()
         for (const shape of shapes) {
             scene.add(shape)
@@ -103,7 +97,6 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
     const addControls = () => {
         if (!camera || !renderer) return
         // https://threejs.org/docs/#OrbitControls
-        console.debug('addControls')
         controls = new OrbitControls(camera, renderer.domElement)
         controls.target = new THREE.Vector3(0, 4, 0)
         controls.update()
@@ -126,7 +119,6 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
     }
     const addAnimation = () => {
         // https://threejs.org/docs/#WebGLRenderer.setAnimationLoop
-        console.debug('addAnimation')
         renderer!.setAnimationLoop(onAnimation)
     }
 
