@@ -35,7 +35,7 @@ const CoreTempsScene = () => {
             label += `, ${cpu.cores} Cores`
 
             if (cpu.physicalCores !== cpu.cores) {
-                label += ` (${cpu.physicalCores} Physical`
+                label += ` (${cpu.physicalCores} Physical)`
             }
             else if ((cpu.performanceCores > 0) && (cpu.efficiencyCores > 0)) {
                 label += ` (${cpu.performanceCores} Performance, ${cpu.efficiencyCores} Efficiency)`
