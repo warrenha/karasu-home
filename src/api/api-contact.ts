@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { apiPost } from './api'
 
-import type { ContactMessage } from '@/models/ContactMessage'
+import type { ContactMessage } from '@/types/ContactMessage'
 
 // - - - - - API - - - - - //
 
