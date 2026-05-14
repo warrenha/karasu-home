@@ -1,10 +1,8 @@
 import { memo, useState } from 'react'
-import { createWireframeScene } from './WireframeBuilder'
-
+import { createWireframeScene, type WireframePayload } from './WireframeBuilder'
 import { ThreeScene, type ThreeSceneT } from '../common'
 
 import type { SceneI } from '../common'
-import type { WireframePayload } from './WireframeBuilder'
 
 type WireframeSceneT = SceneI<WireframePayload>
 

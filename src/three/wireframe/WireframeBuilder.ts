@@ -62,6 +62,7 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
 
     const addLighting = () => {
         if (!scene) return
+
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
         scene!.add(ambientLight)
     
@@ -118,8 +119,9 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
         renderer.render(scene, camera)
     }
     const addAnimation = () => {
+        if (!renderer) return
         // https://threejs.org/docs/#WebGLRenderer.setAnimationLoop
-        renderer!.setAnimationLoop(onAnimation)
+        renderer.setAnimationLoop(onAnimation)
     }
 
     const createScene = (container: HTMLDivElement, payload: WireframePayload) => {
@@ -137,12 +139,16 @@ export const createWireframeScene = (): SceneI<WireframePayload> => {
         addControls()
         addAnimation()
         status = 'created'
-
-        console.debug('[WireframeBuilder] CREATE SCENE DONE')
     }
 
     const resize = () => {  // not used yet
+        if (!div || !camera || !renderer) return
         console.debug('[WireframeBuilder] RESIZE')
+        const size = getSceneSize(div)
+        camera.aspect = size.width / size.height
+        camera.updateProjectionMatrix()
+        renderer.setSize(size.width, size.height)
+        // TODO update width, height, aspect in outer scope?
     }
 
     const update = (payload: WireframePayload) => {  // not used

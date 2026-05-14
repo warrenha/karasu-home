@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
-import { createScene } from './CoreTempsBuilder'
+import { memo, useMemo, useState } from 'react'
 import { useSystemStore } from '@/services/system/useSystemStore'
-import { memo, useCallback, useRef } from 'react'
+import { createCoreTempsScene, type CoreTempsPayload } from './CoreTempsBuilder'
 
-import type { Scene } from '../common/Scene'
+import { ThreeScene, type ThreeSceneT } from '../common'
+
+import type { SceneI } from '../common'
+
+type CoreTempsSceneT = SceneI<CoreTempsPayload>
 
 const NoCores: number[] = []
 
@@ -15,65 +18,34 @@ const NoCores: number[] = []
  */
 const CoreTempsScene = () => {
 
+    // - - - - - System - - - - - //
+
     // System information from the server (live).
     const data = useSystemStore((s) => s.latest)  // SystemInfo | null
+
     const cores = data?.cores || NoCores  // number[]
 
-    // Causes a re-render when the ref is set.
-    const [ref, _setRef] = useState<HTMLDivElement | null>(null)
-    console.debug(`[CoreTempsScene] RENDER (ref=${ref !== null})`)
+    const payload: CoreTempsPayload = useMemo(() => ({
+        coreTemperatures: cores
+    }), [cores])
 
-    // useCallback prevents repeated calls to setRef.
-    const setRef = useCallback((div: HTMLDivElement | null) => {
-        console.debug(`[CoreTempsScene] SET ref ${div !== null}`)
-        _setRef(div)
-    }, [])
+    // - - - - - Scene - - - - - //
 
-    useEffect(() => {
-        console.debug('[CoreTempsScene] MOUNT')
-        return () => {
-            console.debug('[CoreTempsScene] UNMOUNT')
-        }
-    }, [])
+    // The 3d scene that is rendered to the child canvas. It is
+    // created on mount, and disposed of on unmount.
+    const [scene] = useState<CoreTempsSceneT>(() => createCoreTempsScene())
 
-    const sceneRef = useRef<Scene | null>(null)
-    const [sceneIndex, setSceneIndex] = useState(0)
+    // - - - - - Render - - - - - //
 
-    // Create the 3d scene...
-    useEffect(() => {
-        if (ref && !sceneRef.current) {
-            try {
-                console.debug('[CoreTempsScene] CREATE SCENE')
-                sceneRef.current = createScene(ref)  // Scene
-                setSceneIndex(sceneIndex+1)  // re-render
-            }
-            catch (e) {
-                console.warn('[CoreTempsScene] ERROR in createScene')
-                console.warn(e)
-            }
-        }
-        return () => {
-            if (sceneRef.current) {
-                console.debug('[CoreTempsScene] DISPOSE SCENE')
-                sceneRef.current.dispose()  // And detach from the div
-                sceneRef.current = null
-            }
-        }
-    }, [ref])
-
-    useEffect(() => {
-        if (sceneRef.current && cores.length > 0) {  // and not the first, as done in createScene??
-            console.debug('[CoreTempsScene] TODO UPDATE CORES')
-            sceneRef.current.update?.(cores)
-        }
-    }, [cores])
+    const ThreeSceneTyped = ThreeScene as ThreeSceneT<CoreTempsPayload>
 
     return (
         <div
             data-id="CoreTempsScene"
             className="w-full h-[500px] min-h-[500px]">
-            <div
-                data-id="Scene" ref={setRef}
+            <ThreeSceneTyped
+                scene={scene}
+                payload={payload}
                 className="w-full h-[500px] min-h-[500px]" />
         </div>
     )

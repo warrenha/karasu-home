@@ -54,6 +54,8 @@ const _ThreeScene = <T,>(props: Props<T>) => {  // T = payload type, for create/
                 console.debug('[ThreeScene] CREATE SCENE')
                 scene.createScene(ref, payload)  // Scene
                 setIndex(index+1)  // re-render
+
+                window.addEventListener('resize', scene.resize)
             }
             catch (e) {
                 console.warn('[ThreeScene] ERROR in createScene')
@@ -63,10 +65,19 @@ const _ThreeScene = <T,>(props: Props<T>) => {  // T = payload type, for create/
         return () => {
             if (scene.status === 'created') {
                 console.debug('[ThreeScene] DISPOSE SCENE')
+                window.removeEventListener('resize', scene.resize)
                 scene.dispose()  // And detach from the div
             }
         }
     }, [ref])
+
+    // - - - - - Update - - - - - //
+
+    useEffect(() => {
+        if (payload) {  // redundant?
+            scene.update(payload)
+        }
+    }, [payload])
 
     // - - - - - Render - - - - - //
 

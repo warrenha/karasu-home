@@ -1,47 +1,62 @@
 import * as THREE from 'three'
 
 import { limitTemperature, colorForTemperature, makeLabel, makeGroundLabel } from '../common'
-import { /*getSceneSize, */disposeScene, disposeSceneObject, type DisposableSceneObject } from '../common'
-import type { Scene, Size } from '../common'
+import { getSceneSize, disposeScene, disposeSceneObject, type DisposableSceneObject } from '../common'
+
+import type { SceneI, SceneSize, SceneStatus } from '../common'
 
 const BarDepth = 0.55
 const MaxBarHeight = 5
 const MinBarHeight = 0.12
 const BaseY = 0
 
+export type CoreTempsPayload = {
+    coreTemperatures: number[]
+}
+
 /*
- * Creates the complete 3d scene, with camera, lighting and renderer.
+ * Creates the 3d scene, with camera, lighting and renderer.
  */
-export const createScene = (
-    div: HTMLDivElement
-): Scene => {
-    console.debug('Creating 3d temperature scene...')
+export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
 
-    //const { width, height, aspect } = getSceneSize(div)
-    const getSceneSize = (): Size => {
-        const rect = div.getBoundingClientRect()
-        return {
-            width: Math.max(1, rect.width),
-            height: Math.max(1, rect.height),
-            aspect: 0
-        }
+    // TODO put into a typed object? SceneContext?
+    let div: HTMLDivElement | null = null
+    let width = 1
+    let height = 1
+    let aspect = 1
+
+    let status: SceneStatus = 'unset'
+    let scene: THREE.Scene | null = null
+    let renderer: THREE.WebGLRenderer | null = null
+    let camera: THREE.PerspectiveCamera | null = null
+
+    let group: THREE.Group | null = null
+    //let shapes: THREE.Mesh[] = NoShapes
+    //let controls: OrbitControls | null = null
+
+    const addContainer = (container: HTMLDivElement) => {
+        div = container;
+        const size: SceneSize = getSceneSize(div);
+        width = size.width  // ({ width, height, aspect } = size);  // SceneSize
+        height = size.height
+        aspect = size.aspect
     }
-    const { width, height } = getSceneSize()
 
-    const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0x202020)
+    const addScene = () => {
+        console.debug('Creating 3d core temps scene...')
+        scene = new THREE.Scene()
+        scene.background = new THREE.Color(0x202020)
+    }
 
-    const createCamera = () => {
-        const aspect = width / height
-        const camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 100)  // fov (degrees), near/far plane
+    const addCamera = () => {
+        camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 100)  // fov (degrees), near/far plane
         camera.position.set(0, 6.7, 6.6)
         camera.lookAt(0, 2.85, -0.05)
-        return camera;
     }
-    const camera = createCamera()
 
-    const createRenderer = () => {
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const addRenderer = () => {
+        if (!div) return
+        renderer = new THREE.WebGLRenderer({ antialias: true });
 
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.NoToneMapping;
@@ -51,13 +66,15 @@ export const createScene = (
 
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
         div.appendChild(renderer.domElement);
-        return renderer
     }
-    const renderer = createRenderer()
 
     const addLighting = () => {
-        scene.add(new THREE.AmbientLight(0xffffff, 0.52))
+        if (!scene) return
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.52)
+        scene.add(ambientLight)
 
         const keyLight = new THREE.DirectionalLight(0xffffff, 1.35)
         keyLight.position.set(-5, 7, 3)
@@ -71,9 +88,10 @@ export const createScene = (
         keyLight.shadow.camera.far = 18
         scene.add(keyLight)
     }
-    addLighting()
 
-    const addGrid = () => {
+    const addGround = () => {
+        if (!scene) return
+
         const grid = new THREE.GridHelper(12, 12, 0x364150, 0x242b35)
         grid.position.y = -0.02
         scene.add(grid)
@@ -90,12 +108,15 @@ export const createScene = (
         floor.receiveShadow = true
         scene.add(floor)
     }
-    addGrid()
 
-    const group = new THREE.Group()
-    scene.add(group)
+    const addGroup = () => {
+        if (!scene) return
+        group = new THREE.Group()
+        scene.add(group)
+    }
 
     const clearBars = () => {
+        if (!group) return
         while (group.children.length) {
             const child = group.children.pop() as DisposableSceneObject
             disposeSceneObject(child)
@@ -103,6 +124,7 @@ export const createScene = (
     }
 
     const setCoreTemperatures = (temperatures: number[]) => {
+        if (!group) return
         clearBars()
 
         const values = temperatures.map(limitTemperature)
@@ -123,64 +145,97 @@ export const createScene = (
 
             bar.position.x = index * spacing - totalWidth / 2
             bar.position.y = BaseY + height / 2
-            group.add(bar)
+            group!.add(bar)
 
             const label = makeLabel(`${Math.round(temperature)}°`)
             label.position.set(bar.position.x, height + 0.45, 0)
-            group.add(label)
+            group!.add(label)
 
             const coreLabel = makeGroundLabel(`${index}`)
             coreLabel.position.set(bar.position.x, 0.02, BarDepth / 2 + 0.42)
-            group.add(coreLabel)
+            group!.add(coreLabel)
         })
     }
 
-    const update = (temperatures: number[]) => {  // [48, 38, 64, 81, 96])
-        setCoreTemperatures(temperatures)
+    const update = (payload: CoreTempsPayload) => {
+        if (!payload) return
+        setCoreTemperatures(payload.coreTemperatures)  // [48, 38, 64, 81, 96])
     }
-
-    const onResize = () => {
-        const size = getSceneSize()
-        camera.aspect = size.width / size.height
-        camera.updateProjectionMatrix()
-        renderer.setSize(size.width, size.height)
-    }
-    window.addEventListener('resize', onResize)
-
-    //const animate = () => {
-    //    renderer.render(scene, camera)
-    //    requestAnimationFrame(animate)
-    //}
-    //animate()
 
     // https://threejs.org/docs/#Global.onAnimationCallback
     // time  A timestamp indicating the end time of the previous frame's rendering.
     const onAnimation = (time: any) => {
+        if (!scene || !renderer || !camera/* || !controls*/) {
+            console.debug('[WireframeScene] onAnimation skipped, missing:',
+                {scene: !!scene, renderer: !!renderer, camera: !!camera/*, controls: !!controls}*/})
+            return
+        }
         //controls.update()
         renderer.render(scene, camera)
     }
 
     const addAnimation = () => {
+        if (!renderer) return
         // https://threejs.org/docs/#WebGLRenderer.setAnimationLoop
         renderer.setAnimationLoop(onAnimation)
     }
     addAnimation()
 
+    const createScene = (container: HTMLDivElement, payload: CoreTempsPayload) => {
+        console.debug('[CoreTempsBuilder] CREATE SCENE...')
+
+        addContainer(container)
+        addScene()
+        addCamera()
+        addRenderer()
+
+        addLighting()
+        addGround()
+        addGroup()
+        update(payload)
+
+        //addControls()
+        addAnimation()
+        status = 'created'
+    }
+
+    const resize = () => {
+        if (!div || !camera || !renderer) return
+        console.debug('[CoreTempsBuilder] RESIZE')
+        const size = getSceneSize(div)
+        camera.aspect = size.width / size.height
+        camera.updateProjectionMatrix()
+        renderer.setSize(size.width, size.height)
+        // TODO update width, height, aspect in outer scope?
+    }
+
     const dispose = () => {
+        if (!scene || !renderer/* || !controls*/) return
+        console.debug('[WireframeBuilder] DISPOSE')
+
         if (div && renderer.domElement) {
             div.removeChild(renderer.domElement)
         }
         //controls.dispose()
         disposeScene(scene)
-        //renderer.setAnimationLoop(null)
+        renderer.setAnimationLoop(null)
         renderer.dispose()
         //renderer.forceContextLoss()
+
+        div = null
+        scene = null
+        renderer = null
+        camera = null
+        //shapes = NoShapes
+        //controls = null
     }
 
-    return {
-        renderer,  // THREE.WebGLRenderer
-        dispose,
-        update
+    return {  // SceneI
+        status,  // 'unset' | 'created' | 'disposed'
+        createScene,  // (container: HTMLDivElement) => void
+        resize,  // () => void
+        update,  // (payload: WireframePayload) => void
+        dispose  // () => void
     }
 }
 
