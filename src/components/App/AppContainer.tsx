@@ -22,8 +22,9 @@ export const AppContainer = () => {
 
     // - - - - - Render - - - - - //
 
+    // data-id="App" needed for playwright tests!
     return (
-        <div data-id="AppContainer" className="w-full h-full bg-white">
+        <div data-id="App" className="w-full h-full bg-white">
             <FrontPage />
         </div>
     )
