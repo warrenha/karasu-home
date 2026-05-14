@@ -4,7 +4,6 @@ import { CoreTempsScene } from '@/three/system/'
 //import { SystemSection } from '@/components/Sections'
 
 import { cn } from "@/lib/utils"
-import { useEffect } from 'react'
 
 /*
  * - - - - - - - - - - - - - - -
@@ -14,15 +13,6 @@ import { useEffect } from 'react'
  * - - - - - - - - - - - - - - -
  */
 export const FrontPage = () => {
-
-    console.debug('[FrontPage] RENDER')
-    useEffect(() => {
-        console.debug('[FrontPage] MOUNT')
-        return () => {
-            console.debug('[FrontPage] UNMOUNT')
-        }
-    }, [])
-
     return (
         <div
             data-id="FrontPage"

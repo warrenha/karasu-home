@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react'
-import { createScene } from './WireframeBuilder'
-import { memo, useCallback, useRef } from 'react'
+import { memo, useState } from 'react'
+import { createWireframeScene, type WireframePayload } from './WireframeBuilder'
+import { ThreeScene, type ThreeSceneT } from '../common'
 
-import type { Scene } from '../common'
+import type { SceneI } from '../common'
+
+type WireframeSceneT = SceneI<WireframePayload>
+
+const NoPayload: WireframePayload = {}
 
 /*
  * - - - - - - - - - - - - - - -
@@ -12,53 +16,22 @@ import type { Scene } from '../common'
  */
 const WireframeScene = () => {
 
-    // Causes a re-render when the ref is set.
-    const [ref, _setRef] = useState<HTMLDivElement | null>(null)
-    console.debug(`[WireframeScene] RENDER (ref=${ref !== null})`)
+    // The 3d scene that is rendered to the child canvas. It is
+    // created on mount, and disposed of on unmount.
+    const [scene] = useState<WireframeSceneT>(() => createWireframeScene())
 
-    // useCallback prevents repeated calls to setRef.
-    const setRef = useCallback((div: HTMLDivElement | null) => {
-        console.debug(`[WireframeScene] SET ref ${div !== null}`)
-        _setRef(div)
-    }, [])
+    // - - - - - Render - - - - - //
 
-    useEffect(() => {
-        console.debug('[WireframeScene] MOUNT')
-        return () => {
-            console.debug('[WireframeScene] UNMOUNT')
-        }
-    }, [])
-
-    const sceneRef = useRef<Scene | null>(null)
-    const [sceneIndex, setSceneIndex] = useState(0)
-
-    // Create the 3d scene...
-    useEffect(() => {
-        if (ref && !sceneRef.current) {
-            try {
-                console.debug('[WireframeScene] CREATE SCENE')
-                sceneRef.current = createScene(ref)  // Scene
-                setSceneIndex(sceneIndex+1)  // re-render
-            }
-            catch (e) {
-                console.warn('[WireframeScene] ERROR in createScene')
-                console.warn(e)
-            }
-        }
-        return () => {
-            if (sceneRef.current) {
-                console.debug('[WireframeScene] DISPOSE SCENE')
-                sceneRef.current.dispose()  // And detach from the div
-                sceneRef.current = null
-            }
-        }
-    }, [ref])
+    const ThreeSceneTyped = ThreeScene as ThreeSceneT<WireframePayload>
 
     return (
         <div
             data-id="WireframeScene"
             className="w-full bg-white border-y-1 border-neutral-400">
-            <div data-id="Scene" ref={setRef} className="w-full h-64" />
+            <ThreeSceneTyped
+                scene={scene}
+                payload={NoPayload}
+                className="w-full h-64" />
         </div>
     )
 }

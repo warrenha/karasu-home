@@ -1,11 +1,18 @@
-import { useEffect, useState } from 'react'
-import { createScene } from './CoreTempsBuilder'
-import { useSystemStore } from '@/services/system/useSystemStore'
-import { memo, useCallback, useRef } from 'react'
+import { memo, useMemo, useState } from 'react'
+import { useSystemStore } from '@/services/system-temps/useSystemStore'
+import { createCoreTempsScene, type CoreTempsPayload } from './CoreTempsBuilder'
+import { cn } from '@/lib/utils'
 
-import type { Scene } from '../common/Scene'
+import { ThreeScene, type ThreeSceneT } from '../common'
+
+import { useSystemCpu } from '@/services/system-cpu'
+
+import type { SceneI } from '../common'
+
+type CoreTempsSceneT = SceneI<CoreTempsPayload>
 
 const NoCores: number[] = []
+const Title = 'Server Core Temperatures'
 
 /*
  * - - - - - - - - - - - - - - -
@@ -15,66 +22,62 @@ const NoCores: number[] = []
  */
 const CoreTempsScene = () => {
 
+    // - - - - - System - - - - - //
+
+    // Get the CPU details (brand, model, number of cores, etc.)
+    const { cpu } = useSystemCpu()  // SystemCpu | null
+
+    let label = ''
+    if (cpu && !!cpu.manufacturer) {
+        label += `${cpu.manufacturer} ${cpu.brand}`
+
+        if (cpu.cores > 0) {
+            label += `, ${cpu.cores} Cores`
+            if ((cpu.performanceCores > 0) && (cpu.efficiencyCores > 0)) {
+                label += ` (${cpu.performanceCores} Performance, ${cpu.efficiencyCores} Efficiency)`
+            }
+        }
+    }
+
     // System information from the server (live).
     const data = useSystemStore((s) => s.latest)  // SystemInfo | null
+
     const cores = data?.cores || NoCores  // number[]
 
-    // Causes a re-render when the ref is set.
-    const [ref, _setRef] = useState<HTMLDivElement | null>(null)
-    console.debug(`[CoreTempsScene] RENDER (ref=${ref !== null})`)
+    const payload: CoreTempsPayload = useMemo(() => ({
+        coreTemperatures: cores
+    }), [cores])
 
-    // useCallback prevents repeated calls to setRef.
-    const setRef = useCallback((div: HTMLDivElement | null) => {
-        console.debug(`[CoreTempsScene] SET ref ${div !== null}`)
-        _setRef(div)
-    }, [])
+    // - - - - - Scene - - - - - //
 
-    useEffect(() => {
-        console.debug('[CoreTempsScene] MOUNT')
-        return () => {
-            console.debug('[CoreTempsScene] UNMOUNT')
-        }
-    }, [])
+    // The 3d scene that is rendered to the child canvas. It is
+    // created on mount, and disposed of on unmount.
+    const [scene] = useState<CoreTempsSceneT>(() => createCoreTempsScene())
 
-    const sceneRef = useRef<Scene | null>(null)
-    const [sceneIndex, setSceneIndex] = useState(0)
+    // - - - - - Render - - - - - //
 
-    // Create the 3d scene...
-    useEffect(() => {
-        if (ref && !sceneRef.current) {
-            try {
-                console.debug('[CoreTempsScene] CREATE SCENE')
-                sceneRef.current = createScene(ref)  // Scene
-                setSceneIndex(sceneIndex+1)  // re-render
-            }
-            catch (e) {
-                console.warn('[CoreTempsScene] ERROR in createScene')
-                console.warn(e)
-            }
-        }
-        return () => {
-            if (sceneRef.current) {
-                console.debug('[CoreTempsScene] DISPOSE SCENE')
-                sceneRef.current.dispose()  // And detach from the div
-                sceneRef.current = null
-            }
-        }
-    }, [ref])
-
-    useEffect(() => {
-        if (sceneRef.current && cores.length > 0) {  // and not the first, as done in createScene??
-            console.debug('[CoreTempsScene] TODO UPDATE CORES')
-            sceneRef.current.update?.(cores)
-        }
-    }, [cores])
+    const ThreeSceneTyped = ThreeScene as ThreeSceneT<CoreTempsPayload>
 
     return (
         <div
             data-id="CoreTempsScene"
-            className="w-full h-[500px] min-h-[500px]">
-            <div
-                data-id="Scene" ref={setRef}
+            className="relative w-full h-[500px] min-h-[500px]">
+            <ThreeSceneTyped
+                scene={scene}
+                payload={payload}
                 className="w-full h-[500px] min-h-[500px]" />
+            <div 
+                className={cn(
+                    "absolute top-2 left-1/2 -translate-x-1/2 p-2",
+                    "text-neutral-200 pointer-events-none")} >
+                <div className="text-xl" >{Title}</div>
+                { label && (
+                <>
+                    <div className="text-base text-neutral-400" >{label}</div>
+                    <div className="text-base text-neutral-400" >CPU Sensors:</div>
+                </>
+                )}
+            </div>
         </div>
     )
 }

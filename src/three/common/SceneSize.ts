@@ -2,17 +2,27 @@
 
 export type Size = {
     width: number,
+
     height: number,
+
     aspect: number  // width / height
 }
 
+export type SceneSize = Size  // alias, preferred
+
 // - - - - - Size - - - - - //
+
+//export const MinSceneSize: SceneSize = {
+//    width: 1,
+//    height: 1,
+//    aspect: 1  // width / height
+//}
 
 export const getSceneSize = (div: HTMLDivElement): Size => {
     // const rect = div.getBoundingClientRect()
     // rect.width, rect.height
-    const width = Math.max(1, div.clientWidth)
-    const height = Math.max(1, div.clientHeight)
+    const width = Math.max(100, div.clientWidth)
+    const height = Math.max(100, div.clientHeight)
     const aspect = width / height
     return { width, height, aspect }
 }

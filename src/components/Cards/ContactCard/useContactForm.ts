@@ -4,7 +4,7 @@ import * as z from 'zod'
 
 import { usePostContactUs } from '@/api/api-contact'
 
-import type { ContactMessage } from '@/models/ContactMessage'
+import type { ContactMessage } from '@/types/ContactMessage'
 
 /*
  * Field validation.

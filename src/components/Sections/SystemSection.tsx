@@ -1,4 +1,4 @@
-import { useSystemStore } from '@/services/system/useSystemStore'
+import { useSystemStore } from '@/services/system-temps/useSystemStore'
 import { isArray, isNumber } from '@/utils'
 
 /*
