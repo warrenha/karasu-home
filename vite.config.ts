@@ -1,5 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
+import checker from 'vite-plugin-checker'
 import react from '@vitejs/plugin-react'
+
 import path from 'path'
 
 /// <reference types="vitest/config" />
@@ -8,7 +10,11 @@ import { configDefaults, defineConfig } from 'vitest/config'
 // https://vite.dev/config/
 
 export default defineConfig({
-    plugins: [react(), tailwindcss()],
+    plugins: [
+        react(),
+        tailwindcss(),
+        checker({ typescript: true, terminal: false })
+    ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),

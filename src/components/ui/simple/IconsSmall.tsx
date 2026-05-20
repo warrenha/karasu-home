@@ -1,7 +1,13 @@
-import { IoBuildOutline, IoServerOutline, IoAccessibilityOutline, IoAnalyticsOutline, IoChevronForwardOutline, IoExtensionPuzzleOutline, IoSearch } from 'react-icons/io5'
-import { GoSmiley } from "react-icons/go"
+//import { FaCrow } from "react-icons/fa6";
 
-const size = "w-[1.1rem] h-[1.1rem]"
+import { GoSmiley } from 'react-icons/go'
+
+import { HiArrowNarrowRight } from 'react-icons/hi'
+
+import { IoBuildOutline, IoServerOutline, IoAccessibilityOutline, IoAnalyticsOutline, IoChevronForwardOutline,
+    IoExtensionPuzzleOutline, IoSearch } from 'react-icons/io5'
+
+const size = 'w-[1.2rem] h-[1.2rem]'
 
 // - - - - - Icons - - - - //
 
@@ -20,4 +26,8 @@ export const RightIcon = <IoChevronForwardOutline className={size} />
 export const SearchIcon = <IoSearch className={size} />
 
 export const SmileIcon = <GoSmiley className={size} />
+
+export const ArrowSmallRightIcon = <HiArrowNarrowRight className={size} />
+
+//export const CrowIcon = <FaCrow className={size} />
 
