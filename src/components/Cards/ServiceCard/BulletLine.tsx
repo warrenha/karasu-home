@@ -20,12 +20,14 @@ export const BulletLine = (props: Props) => {
 
     return (
         <div data-id="BulletLine"
-            className="flex justify-start items-center gap-3 text-left">
+            className="flex justify-start items-start gap-3 text-left">
             { !text ? (
                 '\u00A0' // &nbsp;
             ) : (
             <>
-                {icon}
+                <span className="pt-1">
+                    {icon}
+                </span>
                 {text}
             </>
             )}

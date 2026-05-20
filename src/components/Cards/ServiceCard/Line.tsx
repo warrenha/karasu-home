@@ -27,21 +27,19 @@ export const Line = (props: Props) => {
         props.icon === 'arrow' ? ArrowSmallRightIcon : null
 
     return (
-        <span data-id="Line"
-            className="flex items-center text-left">
-            <>
-                <span>{label}</span>
-                { icon ? (
-                    <span className="px-[5px] text-[#f15922]" >
-                        {icon}
-                    </span>
-                ) : (
-                    '\u00a0' // &nbsp;
-                )}
-                <span className="text-neutral-500" >
-                    {children}
+        <div data-id="Line"
+            className="flex flex-wrap items-center gap-1">
+            <span>{label}</span>
+            { icon ? (
+                <span className="px-[5px] text-[#f15922]" >
+                    {icon}
                 </span>
-            </>
-        </span>
+            ) : (
+                '\u00a0' // &nbsp;
+            )}
+            <span className="text-neutral-500" >
+                {children}
+            </span>
+        </div>
     )
 }
