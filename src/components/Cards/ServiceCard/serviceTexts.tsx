@@ -28,38 +28,38 @@ export const getIcon = (
 export const serviceTexts: IconText[] = [
     { icon: UserIcon, text: 'User interface design and development' },
     { icon: PuzzleIcon, text: (
-        <Line label="Custom components" >
+        <Line label="Custom components" icon="arrow" >
             Fast, responsive & modern tech stack
         </Line>
     )},
     { icon: DataIcon, text: (
-        <Line label="Data visualization" >
-             Charts, maps showing (GIS) data layers
+        <Line label="Data visualization" icon="arrow" >
+             Charts, maps with (GIS) data layers, SVGs, PDFs
         </Line>
     )},
     '',
     { icon: ToolIcon, text: (
-        <Line label="Technology stack:" >
+        <Line label="Technology stack" icon="arrow" >
             React, TypeScript, Node.js, Express server, Hono,
         </Line>
     )},
-    { icon: ToolIcon, text: (
-        <span className="text-neutral-500" >
-           ... Zustand/Redux, Tanstack Query, WebSockets, Three.js
+    { icon: null, text: (
+        <span className="text-neutral-500">
+           <span className="ml-6" >... Zustand/Redux, Tanstack Query, WebSockets, Three.js</span>
         </span>
     )},
     { icon: SearchIcon, text: (
-        <Line label="Integration Testing:" >
+        <Line label="Integration Testing" icon="arrow" >
             Jest, Vitest, React Testing Library (RTL)
         </Line>
     )},
     { icon: SearchIcon, text: (
-        <Line label="End-to-End (E2E) Testing:" >
+        <Line label="End-to-End (E2E) Testing" icon="arrow" >
             Playwright
         </Line>
     )},
     { icon: DbIcon, text: (
-        <Line label="Database:" >
+        <Line label="Database" icon="arrow" >
             PostgreSQL, Oracle, SQL Server, MySQL
         </Line>
     )}

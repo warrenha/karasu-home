@@ -21,15 +21,15 @@ export const Card = (props: Props) => {
         <div
             data-id={props['data-id'] || 'Card'}
             className={cn(
-                'bg-neutral-100 text-neutral-700 border border-[#c5c5c5] rounded-2xl shadow-[3px_3px_0_0_rgb(247,247,247)]',
+                'text-neutral-700 text-base',
                 className
             )}>
             {title && (
-                <h2 className="pb-2 text-[15px] font-[500] py-4 px-5">
+                <h2 className="text-lg font-[500] px-5">
                     {title}
                 </h2>
             )}
-            <div className="text-[14px] leading-[1.6] pt-2 pb-4 px-5">
+            <div className="leading-[1.6] pt-2 pb-4 px-5">
                 {children}
             </div>
         </div>

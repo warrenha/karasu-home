@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "shadcn/tailwind.css";
+@import 'tailwindcss';
+@import 'shadcn/tailwind.css';
 
 /*
  * https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually
@@ -96,6 +96,15 @@
     --shadow-spread: var(--shadow-spread);
     --shadow-blur: var(--shadow-blur);
     --shadow-opacity: var(--shadow-opacity);
+
+    --text-sm: 13px;
+    --text-sm--line-height: 20px;
+
+    --text-base: 14px;
+    --text-base--line-height: 21px;
+
+    --text-lg: 16px;
+    --text-sm--line-height: 24px;
 }
 
 /*

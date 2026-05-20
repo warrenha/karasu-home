@@ -9,7 +9,7 @@ type Props = {
 /*
  * - - - - -  - - - - -  - - - - -
  *
- * Renders a bullet point (icon) with text.
+ * Renders a bullet point, with a custom icon & text.
  *
  * - - - - -  - - - - -  - - - - -
  */
@@ -20,7 +20,7 @@ export const BulletLine = (props: Props) => {
 
     return (
         <div data-id="BulletLine"
-            className="flex items-center gap-2 text-left">
+            className="flex justify-start items-center gap-3 text-left">
             { !text ? (
                 '\u00A0' // &nbsp;
             ) : (

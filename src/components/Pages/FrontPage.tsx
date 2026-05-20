@@ -37,6 +37,9 @@ export const FrontPage = () => {
                     Page created using React, Typescript, Tailwind CSS, Vite, and Three.js.
                     Hosted on Cloudflare Pages.
                 </div>
+                <div>
+                    WebSockets are used to send live system information from a Node.js/Hono server.
+                </div>
             </div>
         </div>
     )
