@@ -1,6 +1,7 @@
 import { ContactCard, ServiceCard } from '@/components/Cards'
 import { WireframeScene } from '@/three/wireframe'
 import { CoreTempsScene } from '@/three/system/'
+import { CrowIcon } from '@/components/ui/simple'
 
 import { cn } from "@/lib/utils"
 
@@ -18,9 +19,9 @@ export const FrontPage = () => {
             className={cn(
                 "flex flex-col content-center items-center h-full w-full",
                 "text-center overflow-y-auto bg-white text-gray-800 gap-[25px] pt-2 pb-0")} >
-            <div className="flex flex-col gap-2" >
+            <div className="flex flex-col items-center gap-2" >
                 <h1>Karasu Software</h1>
-                <h2 >カラスソフトウェア</h2>
+                <h2 className="flex items-center gap-3">{CrowIcon} カラスソフトウェア</h2>
                 <h2 >Software consultancy, application design & engineering</h2>
             </div>
             <WireframeScene />
