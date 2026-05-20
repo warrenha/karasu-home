@@ -37,7 +37,7 @@ export const serviceTexts: IconText[] = [
              Charts, maps with (GIS) data layers, SVGs, PDFs
         </Line>
     )},
-    '',
+    //'',
     { icon: ToolIcon, text: (
         <Line label="Technology stack" icon="arrow" >
             React, TypeScript, Node.js, Express server, Hono,

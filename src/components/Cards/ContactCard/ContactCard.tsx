@@ -6,6 +6,7 @@ import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from 
 import { Card, LabelIcon, SmileIcon } from '@/components/ui/simple'
 
 import { useContactForm } from './useContactForm'
+import { cn } from "@/lib/utils"
 
 const Title = 'Contact us'
 
@@ -41,7 +42,9 @@ export const ContactCard = () => {
             <Input
                 {...field}
                 id="form-contact-name"
-                className="text-base md:text-base ring-red-400 bg-[rgb(247,247,247)]"
+                className={cn(
+                    "text-base md:text-base",
+                    "bg-[#f7f7f7] border-[#e7e7e7] shadow-karasu")}
                 aria-invalid={fieldState.invalid}
                 placeholder="Please enter your name"
                 autoComplete="off"
@@ -58,7 +61,9 @@ export const ContactCard = () => {
             <Input
                 {...field}
                 id="form-contact-email"
-                className="text-base md:text-base bg-[rgb(247,247,247)]"
+                className={cn(
+                    "text-base md:text-base",
+                    "bg-[#f7f7f7] border-[#e7e7e7] shadow-karasu")}
                 aria-invalid={fieldState.invalid}
                 placeholder="Please enter your email address"
                 autoComplete="off"
@@ -72,16 +77,18 @@ export const ContactCard = () => {
             <FieldLabel htmlFor="form-contact-messsage" className="text-base">
                 Message
             </FieldLabel>
-            <InputGroup>
+            <InputGroup className="bg-[#f7f7f7] border-[#e7e7e7] shadow-karasu" >
                 <InputGroupTextarea
                     {...field}
                     id="form-contact-message"
-                    className="min-h-24 resize-none text-base md:text-base rounded-[5px] bg-[rgb(247,247,247)] disabled:cursor-not-allowed"
+                    className={cn(
+                        "min-h-24 resize-none text-base md:text-base rounded-[5px] disabled:cursor-not-allowed"
+                    )}
                     placeholder="The message you want to send"
                     rows={6}
                     aria-invalid={fieldState.invalid} 
                     disabled={disabled} />
-                <InputGroupAddon align="block-end" className="rounded-[5px] bg-[rgb(247,247,247)]">
+                <InputGroupAddon align="block-end" className="rounded-[5px]]">
                     <InputGroupText className="tabular-nums">
                         {field.value.length}/1000 characters
                     </InputGroupText>
@@ -105,7 +112,10 @@ export const ContactCard = () => {
                 type="submit"
                 form="form-contact"
                 disabled={disabled}
-                className="text-base cursor-pointer px-3 border-0">
+                className={cn(
+                    "text-base cursor-pointer px-3 border-0",
+                    "text-[#ffd7c8] bg-[#f15922]"
+                )}>
                 Send
             </Button>
             <div>{statusText}</div>
@@ -115,7 +125,8 @@ export const ContactCard = () => {
     const disabledC = disabled ? 'bg-[#86cbd5]' : ''
 
     return (
-        <Card data-id="ContactCard" title={Title} className={disabledC}>
+        <Card data-id="ContactCard" title={Title}
+            className={`w-[450px] max-w-full ${disabledC}`} >
             <div className="flex flex-col gap-5">
                 <form id="form-contact" onSubmit={form.handleSubmit(onSubmit)}>
                     <FieldGroup>
