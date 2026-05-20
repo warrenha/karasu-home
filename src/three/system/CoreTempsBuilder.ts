@@ -85,7 +85,9 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
         renderer = new THREE.WebGLRenderer({ antialias: true });
 
         renderer.outputColorSpace = THREE.SRGBColorSpace;
-        renderer.toneMapping = THREE.NoToneMapping;
+        //renderer.toneMapping = THREE.NoToneMapping;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.4;
 
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(width, height);
@@ -161,9 +163,10 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
             const height = THREE.MathUtils.lerp(MinBarHeight, MaxBarHeight, temperature / 100)
             const geometry = new THREE.BoxGeometry(0.72, height, BarDepth)
             const material = new THREE.MeshStandardMaterial({
+            //const material = new THREE.MeshLambertMaterial({
                 color: colorForTemperature(temperature),
-                roughness: 0.42,
-                metalness: 0.08
+                //roughness: 0.42,
+                //metalness: 0.08
             })
             const bar = new THREE.Mesh(geometry, material)
             bar.castShadow = true
