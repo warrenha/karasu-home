@@ -56,6 +56,30 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
         camera.lookAt(0, 2.85, -0.05)  // overridden by orbit controls
     }
 
+    const addControls = () => {
+        if (!camera || !renderer) return
+        // https://threejs.org/docs/#OrbitControls
+        controls = new OrbitControls(camera, renderer.domElement)
+        //controls.target = new THREE.Vector3(0, 4, 0)
+        controls.target = new THREE.Vector3(0, 2.0, -0.05)
+        controls.enableRotate = false;
+        controls.enableZoom = false;
+        controls.screenSpacePanning = true;
+        controls.update()
+
+        controls.addEventListener('change', () => {
+            if (!camera || !controls) return
+            camera.position.x = THREE.MathUtils.clamp(
+                camera.position.x, -5, 5)
+            camera.position.y = 5.5
+            camera.position.z = 5.5
+            controls.target.x = THREE.MathUtils.clamp(
+                controls.target.x, -5, 5)
+            controls.target.y = 2.0
+            controls.target.z = -0.05
+        })
+    }
+
     const addRenderer = () => {
         if (!div) return
         renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -89,19 +113,6 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
         keyLight.shadow.camera.near = 0.5
         keyLight.shadow.camera.far = 18
         scene.add(keyLight)
-    }
-
-    const addControls = () => {
-        if (!camera || !renderer) return
-        // https://threejs.org/docs/#OrbitControls
-        controls = new OrbitControls(camera, renderer.domElement)
-        //controls.target = new THREE.Vector3(0, 4, 0)
-        controls.target = new THREE.Vector3(0, 2.0, -0.05)
-        controls.enableRotate = false;
-        controls.enableZoom = false;
-        controls.screenSpacePanning = true;
-        controls.update()
-
     }
 
     const addGround = () => {
