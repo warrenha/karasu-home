@@ -50,6 +50,7 @@ const CoreTempsScene = () => {
 
     const payload: CoreTempsPayload = useMemo(() => ({
         coreTemperatures: cores
+        //coreTemperatures: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 105, 115, 125, 160]
     }), [cores])
 
     // - - - - - Scene - - - - - //
@@ -65,11 +66,11 @@ const CoreTempsScene = () => {
     return (
         <div
             data-id="CoreTempsScene"
-            className="relative w-full h-[500px] min-h-[500px]">
+            className="relative w-full">
             <ThreeSceneTyped
                 scene={scene}
                 payload={payload}
-                className="w-full h-[500px] min-h-[500px]" />
+                className="w-full h-[400px] min-h-[400px]" />
             <div 
                 className={cn(
                     "absolute top-2 left-1/2 -translate-x-1/2 p-2",
