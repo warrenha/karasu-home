@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 import { limitTemperature, colorForTemperature, makeLabel, makeGroundLabel } from '../common'
 import { getSceneSize, disposeScene, disposeSceneObject, type DisposableSceneObject } from '../common'
@@ -29,6 +30,7 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
     let scene: THREE.Scene | null = null
     let renderer: THREE.WebGLRenderer | null = null
     let camera: THREE.PerspectiveCamera | null = null
+    let controls: OrbitControls | null = null
 
     let group: THREE.Group | null = null
     //let shapes: THREE.Mesh[] = NoShapes
@@ -50,8 +52,8 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
 
     const addCamera = () => {
         camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 100)  // fov (degrees), near/far plane
-        camera.position.set(0, 6.7, 6.6)
-        camera.lookAt(0, 2.85, -0.05)
+        camera.position.set(0, 5.5, 5.5)
+        camera.lookAt(0, 2.85, -0.05)  // overridden by orbit controls
     }
 
     const addRenderer = () => {
@@ -87,6 +89,19 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
         keyLight.shadow.camera.near = 0.5
         keyLight.shadow.camera.far = 18
         scene.add(keyLight)
+    }
+
+    const addControls = () => {
+        if (!camera || !renderer) return
+        // https://threejs.org/docs/#OrbitControls
+        controls = new OrbitControls(camera, renderer.domElement)
+        //controls.target = new THREE.Vector3(0, 4, 0)
+        controls.target = new THREE.Vector3(0, 2.0, -0.05)
+        controls.enableRotate = false;
+        controls.enableZoom = false;
+        controls.screenSpacePanning = true;
+        controls.update()
+
     }
 
     const addGround = () => {
@@ -165,12 +180,12 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
     // https://threejs.org/docs/#Global.onAnimationCallback
     // time  A timestamp indicating the end time of the previous frame's rendering.
     const onAnimation = (time: any) => {
-        if (!scene || !renderer || !camera/* || !controls*/) {
+        if (!scene || !renderer || !camera || !controls) {
             console.debug('[WireframeScene] onAnimation skipped, missing:',
-                {scene: !!scene, renderer: !!renderer, camera: !!camera/*, controls: !!controls}*/})
+                {scene: !!scene, renderer: !!renderer, camera: !!camera, controls: !!controls})
             return
         }
-        //controls.update()
+        controls.update()
         renderer.render(scene, camera)
     }
 
@@ -194,7 +209,7 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
         addGroup()
         update(payload)
 
-        //addControls()
+        addControls()
         addAnimation()
         status = 'created'
     }
@@ -210,13 +225,13 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
     }
 
     const dispose = () => {
-        if (!scene || !renderer/* || !controls*/) return
+        if (!scene || !renderer || !controls) return
         console.debug('[WireframeBuilder] DISPOSE')
 
         if (div && renderer.domElement) {
             div.removeChild(renderer.domElement)
         }
-        //controls.dispose()
+        controls.dispose()
         disposeScene(scene)
         renderer.setAnimationLoop(null)
         renderer.dispose()
@@ -227,7 +242,7 @@ export const createCoreTempsScene = (): SceneI<CoreTempsPayload> => {
         renderer = null
         camera = null
         //shapes = NoShapes
-        //controls = null
+        controls = null
     }
 
     return {  // SceneI

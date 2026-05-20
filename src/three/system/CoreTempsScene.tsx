@@ -69,7 +69,7 @@ const CoreTempsScene = () => {
             <ThreeSceneTyped
                 scene={scene}
                 payload={payload}
-                className="w-full h-[500px] min-h-[500px]" />
+                className="w-full h-[400px] min-h-[400px]" />
             <div 
                 className={cn(
                     "absolute top-2 left-1/2 -translate-x-1/2 p-2",
