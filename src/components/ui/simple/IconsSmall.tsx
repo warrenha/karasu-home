@@ -1,4 +1,4 @@
-//import { FaCrow } from "react-icons/fa6";
+import { FaCrow } from "react-icons/fa6";
 
 import { GoSmiley } from 'react-icons/go'
 
@@ -29,5 +29,5 @@ export const SmileIcon = <GoSmiley className={size} />
 
 export const ArrowSmallRightIcon = <HiArrowNarrowRight className={size} />
 
-//export const CrowIcon = <FaCrow className={size} />
+export const CrowIcon = <FaCrow className={size} />
 

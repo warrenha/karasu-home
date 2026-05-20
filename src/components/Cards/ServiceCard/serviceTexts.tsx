@@ -45,7 +45,7 @@ export const serviceTexts: IconText[] = [
     )},
     { icon: null, text: (
         <span className="text-neutral-500">
-           <span className="ml-6" >... Zustand/Redux, Tanstack Query, WebSockets, Three.js</span>
+           <span className="ml-6" >... Zustand/Redux, Tanstack, WebSockets, Three.js</span>
         </span>
     )},
     { icon: SearchIcon, text: (
