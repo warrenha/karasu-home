@@ -10,6 +10,9 @@ type Props = {
 & ChildrenProps
 & ClassNameProps
 
+//const COLOR = '#446dc6'
+//const COLOR = '#f15922'
+
 /*
  * - - - - -  - - - - -  - - - - -
  *
@@ -24,14 +27,14 @@ export const Line = (props: Props) => {
         props.icon === 'arrow' ? ArrowSmallRightIcon : null
 
     return (
-        <div data-id="Line"
+        <span data-id="Line"
             className="flex items-center text-left">
             <>
                 <span>{label}</span>
                 { icon ? (
-                    <div className="px-[5px] text-[#446dc6]" >
+                    <span className="px-[5px] text-[#f15922]" >
                         {icon}
-                    </div>
+                    </span>
                 ) : (
                     '\u00a0' // &nbsp;
                 )}
@@ -39,6 +42,6 @@ export const Line = (props: Props) => {
                     {children}
                 </span>
             </>
-        </div>
+        </span>
     )
 }
