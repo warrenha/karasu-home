@@ -46,7 +46,7 @@ const CoreTempsScene = () => {
     // System information from the server (live).
     const data = useSystemStore((s) => s.latest)  // SystemInfo | null
 
-    const cores = data?.cores || NoCores  // number[]
+    const cores = data?.cpu?.cores || NoCores  // number[]
 
     const payload: CoreTempsPayload = useMemo(() => ({
         coreTemperatures: cores
