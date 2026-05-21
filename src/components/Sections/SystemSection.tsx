@@ -12,15 +12,17 @@ const SystemSection = () => {
     // The latest system information...
     const data = useSystemStore((s) => s.latest)  // SystemInfo | null
 
+    const cpu = data?.cpu || null
+
     let texts: string[] = []
-    if (isNumber(data?.main)) {
-        texts.push(`Temperature: ${data.main}`)
+    if (isNumber(cpu?.main)) {
+        texts.push(`Temperature: ${cpu.main}`)
     }
-    if (isArray(data?.cores) && data.cores.length > 0) {
+    if (isArray(cpu?.cores) && cpu.cores.length > 0) {
         let s = 'Cores '
-        for (let i = 0; i < data.cores.length && i < 4; i++) {
+        for (let i = 0; i < cpu.cores.length && i < 4; i++) {
             s += (i === 0) ? ' ' : ',  '
-            s += `(${i}) ${data.cores[i]}`
+            s += `(${i}) ${cpu.cores[i]}`
         }
         texts.push(s)
     }
